@@ -1,5 +1,12 @@
+from sys import argv
+
+
 def reverse(s):
-    return ' '.join(reversed(s.split(' ')))
+    # return ' '.join(reversed(s.split(' ')))
+    str = ""
+    for i in s:
+        str = i + str
+    return str
 
 
 def reverse_word(s):
@@ -15,5 +22,5 @@ def inplace_reverse(s):
 
 
 if __name__ == '__main__':
-    s = 'the walking dog'
-    print(reverse_sentence(s))
+    args = ' '.join(argv[1:])
+    print(reverse(args))

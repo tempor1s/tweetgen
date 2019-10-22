@@ -3,6 +3,7 @@ from random import shuffle, randint
 
 
 def rearrange(arr):
+    # Fisher Yates Implementation
     # Create a copy so that we are not modifiying the passed in array - slower but safe
     new_arr = list(arr)
     # Loop through the length of the array

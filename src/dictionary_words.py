@@ -10,11 +10,11 @@ def get_dict_words(num):
     # Commented out are other implementations to try to be faster using caching an
     path = "/usr/share/dict/words"
     with open(path, "r") as f:
-        all_words = f.read().split('\n')
+        all_words = f.read().split('\n')  # .readlines()  or .readline() in a for loop
         random_words = []
         for i in range(int(num)):
             random_words.append(choice(all_words))
-        return ' '.join(random_words) + '.'
+        return ' '.join(random_words).capitalize() + '.'
 
         # all_words = dict((x, x) for x in f.read().split('\n'))
         # random_words = []
@@ -31,9 +31,28 @@ def get_dict_words(num):
     # return ' '.join(rand_words) + '.'
 
 
+@time_it
+def get_words_from_file(path):
+    # Fastest version of reading from file
+    with open(path, 'r') as f:
+        return f.read().split('\n')
+    # This version is about 60ms slower every time
+    # with open(path, 'r') as f:
+    #     return f.readlines()
+
+@time_it
+def get_random_words(num):
+    path = "/usr/share/dict/words"
+    words = get_words_from_file(path)
+
+    random_words = []
+    for i in range(int(num)):
+        random_words.append(choice(words))
+    return ' '.join(random_words).capitalize() + '.'
+
 
 if __name__ == '__main__':
     # Only get 1 arg and then convert it to int to get that amount of words
     args = argv[1:3]
-    words = get_dict_words(args[0])
+    words = get_random_words(args[0])
     print(words)

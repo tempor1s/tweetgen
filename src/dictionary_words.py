@@ -37,13 +37,14 @@ def get_words_from_file(path):
     # Fastest version of reading from file
     with open(path, 'r') as f:
         return f.read().split('\n')
-    # This version is about 60ms slower every time - better space complexity because doesnt have to store as string then convert to arr
+    # This version is about 60ms slower every time - better space complexity i assume because doesnt have to store as string then convert to arr
     # with open(path, 'r') as f:
     #     return f.readlines()
 
 
 @time_it
 def get_set_words_from_file(path):
+    # Use a generator to put all lines into a set and return
     return set(line.strip() for line in open('/usr/share/dict/words'))
 
 

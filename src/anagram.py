@@ -6,7 +6,6 @@ from utils import time_it
 
 def get_anagram(s):
     # Return a list of all character permutations with a given word.
-    # TODO: Make this return a single real word from dictonary
     return set([''.join(perm) for perm in permutations(s)])
 
 @time_it

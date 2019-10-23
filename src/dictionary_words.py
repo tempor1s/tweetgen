@@ -16,7 +16,8 @@ def get_dict_words(num):
             random_words.append(choice(all_words))
         return ' '.join(random_words).capitalize() + '.'
 
-        # all_words = dict((x, x) for x in f.read().split('\n'))
+        # Work on this a bit more and try different variations
+        # all_words = dict((x, x) for x in f.read().split('\n')) 
         # random_words = []
         # for i in range(int(num)):
         #     random_words.append(choice(list(all_words.keys())))
@@ -36,9 +37,15 @@ def get_words_from_file(path):
     # Fastest version of reading from file
     with open(path, 'r') as f:
         return f.read().split('\n')
-    # This version is about 60ms slower every time
+    # This version is about 60ms slower every time - better space complexity because doesnt have to store as string then convert to arr
     # with open(path, 'r') as f:
     #     return f.readlines()
+
+
+@time_it
+def get_set_words_from_file(path):
+    return set(line.strip() for line in open('/usr/share/dict/words'))
+
 
 @time_it
 def get_random_words(num):

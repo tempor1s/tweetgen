@@ -1,6 +1,6 @@
 from itertools import permutations
 from sys import argv
-from dictionary_words import get_words_from_file
+from dictionary_words import get_set_words_from_file
 from utils import time_it
 
 
@@ -12,19 +12,20 @@ def get_anagram(s):
 @time_it
 def get_real_anagram(s):
     anagrams_variations = get_anagram(s)
-    words = get_words_from_file('/usr/share/dict/words')
+    words = get_set_words_from_file('/usr/share/dict/words')
 
-    real_words = []
-    for word in words:
-        if word in anagrams_variations:
-            real_words.append(word)
-    
-    # 150ms slower
-    # for word in anagrams_variations:
-    #     if word in words:
+    return anagrams_variations.intersection(words)
+    # real_words = []
+    # for word in words:
+    #     if word in anagrams_variations:
     #         real_words.append(word)
+    
+    # # 150ms slower
+    # # for word in anagrams_variations:
+    # #     if word in words:
+    # #         real_words.append(word)
 
-    return real_words
+    # return real_words
 
 
 if __name__ == '__main__':

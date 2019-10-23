@@ -1,7 +1,8 @@
 from sys import argv
 from random import shuffle, randint
+from utils import time_it
 
-
+@time_it
 def rearrange(arr):
     # Fisher Yates Implementation
     # Create a copy so that we are not modifiying the passed in array - slower but safe
@@ -17,6 +18,15 @@ def rearrange(arr):
     return new_arr
 
 
+def fisher_yates_shuffle(the_list):
+    amnt_to_shuffle = len(the_list)
+    while amnt_to_shuffle > 1:
+        i = int(floor(random() * amnt_to_shuffle))
+        amnt_to_shuffle -= 1
+        the_list[i], the_list[amnt_to_shuffle] = the_list[amnt_to_shuffle], the_list[i]
+    return the_list
+
+
 def lazy_rearrange(arr):
     new_arr = list(arr)
     shuffle(new_arr)
@@ -26,5 +36,5 @@ def lazy_rearrange(arr):
 if __name__ == '__main__':
     # Trying to be verbose, could 1 line this :P
     args = argv[1:]
-    rearranged = badrearrange(args)
+    rearranged = rearrange(args)
     print(rearranged)

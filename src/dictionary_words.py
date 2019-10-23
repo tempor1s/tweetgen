@@ -59,6 +59,14 @@ def get_random_words(num):
     return ' '.join(random_words).capitalize() + '.'
 
 
+
+def get_random_word():
+    path = "/usr/share/dict/words"
+    words = get_words_from_file(path)
+
+    return choice(words)
+
+
 if __name__ == '__main__':
     # Only get 1 arg and then convert it to int to get that amount of words
     args = argv[1:3]

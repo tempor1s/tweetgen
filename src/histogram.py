@@ -43,6 +43,12 @@ def log_histrogram(histogram, filename='log.txt'):
     """
     Log all entries in a histogram to a text file.
     """
+    # Try to remove the log file if there is a previous log file, otherwise just continue if the file doesn't exist
+    try:
+        os.remove(filename)
+    except FileNotFoundError:
+        pass
+    
     with open(filename, 'a+') as f:
         if type(histogram) == type({}):
             for key in histogram.keys():

@@ -1,5 +1,6 @@
 from utils import time_it
 from operator import itemgetter
+import os
 
 @time_it
 def histogram(source_file):
@@ -15,6 +16,7 @@ def histogram(source_file):
     """
     # Dictonary Implementation - Nothing can beat the performance of this.
     # Also, this will not clean words - so please pass it a corpus that isn't messed up :)
+    # TODO: Remove all non-text characters from word before appending.
     with open(source_file, 'r') as f:
         words = f.read().split()
         histo = {}
@@ -32,6 +34,21 @@ def sort_histogram(dict_histogram):
     for key in dict_histogram.keys():
         listed_histo.append([key, dict_histogram.get(key)])
     return sorted(listed_histo, key=itemgetter(1), reverse=True)
+
+
+@time_it
+def log_histrogram(histogram, filename='log.txt'):
+    """
+    Log all entries in a histogram to a text file.
+    """
+    with open(filename, 'a+') as f:
+        if type(histogram) == type({}):
+            for key in histogram.keys():
+                f.write(f'{key} {str(histogram.get(key))}\n')
+        elif type(histogram) == type([]): # For sorted lists :)
+            for item in histogram:
+                f.write(f'{item[0]} {item[1]}\n')
+
 
 # This is a disgusting approach lmaoooo. Only about 950ms slower than my dictonary version :)
 @time_it
@@ -97,6 +114,7 @@ def frequency(word, histogram):
 
 if __name__ == "__main__":
     histo = histogram('test.txt')
+    sorted_histo = sort_histogram(histo)
     # histo = tuple_histogram('test.txt')
     # histo = count_histogram('test.txt')
-    print(sort_histogram(histo))
+    log_histrogram(sorted_histo)

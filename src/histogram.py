@@ -1,4 +1,5 @@
 from utils import time_it
+from operator import itemgetter
 
 @time_it
 def histogram(source_file):
@@ -12,7 +13,7 @@ def histogram(source_file):
     Returns:
         Dict that contains unique words along with the number of times that word appears in text
     """
-    # Dictonary Implementation - Fastest
+    # Dictonary Implementation - Nothing can beat the performance of this.
     # Also, this will not clean words - so please pass it a corpus that isn't messed up :)
     with open(source_file, 'r') as f:
         words = f.read().split()
@@ -20,6 +21,17 @@ def histogram(source_file):
         for word in words:
             histo[word] = histo.get(word, 0) + 1
         return histo
+
+
+@time_it
+def sort_histogram(dict_histogram):
+    """
+    Takes a dictonary histogram and returns into a sorted list based off of amount of times a word appears
+    """
+    listed_histo = []
+    for key in dict_histogram.keys():
+        listed_histo.append([key, dict_histogram.get(key)])
+    return sorted(listed_histo, key=itemgetter(1), reverse=True)
 
 # This is a disgusting approach lmaoooo. Only about 950ms slower than my dictonary version :)
 @time_it
@@ -87,6 +99,4 @@ if __name__ == "__main__":
     histo = histogram('test.txt')
     # histo = tuple_histogram('test.txt')
     # histo = count_histogram('test.txt')
-    print(histo)
-    print(unique_words(histo))
-    print(frequency('and', histo))
+    print(sort_histogram(histo))

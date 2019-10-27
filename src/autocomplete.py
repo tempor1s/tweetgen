@@ -6,6 +6,15 @@ import random
 
 @time_it
 def autocomplete(s):
+    """
+    Get all words that start with a certain string. Basic autocomplete
+
+    Params:
+        s: str - The string that you want to 'autocomplete'
+
+    Returns:
+        list: List of all the words that start with the given string
+    """
     words = get_words_from_file('/usr/share/dict/words')
     return [w for w in words if w.startswith(s)]
 
@@ -14,7 +23,7 @@ def autocomplete(s):
     #     sub_str = word[:len(s)]
     #     if s == sub_str:
     #         ret.append(word)
-    
+
     # return ret
 
 

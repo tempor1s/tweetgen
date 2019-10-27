@@ -11,9 +11,18 @@ Cow = '''
        ||     ||  
        
        '''
-    
+
 
 def cowsay(sentence):
+    """
+    Lets the cow say something!
+
+    Params:
+        sentence: str - The sentence that you want the cow to say
+
+    Returns:
+        The cow saying your sentence
+    """
     sentence = ' '.join(sentence)
     return Cow.format(sentence)
 

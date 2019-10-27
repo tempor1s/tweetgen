@@ -4,12 +4,31 @@ from dictionary_words import get_set_words_from_file
 from utils import time_it
 
 
+@time_it
 def get_anagram(s):
-    # Return a list of all character permutations with a given word.
+    """
+    Return a list of all character permutations with a given word
+
+    Params:
+        s: str - The string you want to get all permutations for
+
+    Returns:
+        set: A set of all string permutations
+    """
     return set([''.join(perm) for perm in permutations(s)])
+
 
 @time_it
 def get_real_anagram(s):
+    """
+    Get all the anagrams for a given word
+
+    Params:
+        s: The word that you want to get all the anagrams for
+
+    Returns:
+        set: All of the anagrams
+    """
     anagrams_variations = get_anagram(s)
     words = get_set_words_from_file('/usr/share/dict/words')
 
@@ -18,8 +37,7 @@ def get_real_anagram(s):
     # for word in words:
     #     if word in anagrams_variations:
     #         real_words.append(word)
-    
-    # # 150ms slower
+
     # # for word in anagrams_variations:
     # #     if word in words:
     # #         real_words.append(word)

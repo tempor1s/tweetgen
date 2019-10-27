@@ -2,7 +2,15 @@ from sys import argv
 
 
 def reverse(s):
-    # return ' '.join(reversed(s.split(' ')))
+    """
+    Reverse a string
+
+    Params:
+        s: str - The string you want to reverse
+
+    Returns:
+        str: The reversed string
+    """
     str = ""
     for i in s:
         str = i + str
@@ -10,10 +18,28 @@ def reverse(s):
 
 
 def reverse_word(s):
+    """
+    Reverse a word
+
+    Params:
+        s: str - The word to reverse
+
+    Returns:
+        str: The reversed string
+    """
     return s[::-1]
 
 
 def inplace_reverse(s):
+    """
+    Reverse each word in a string without changing the order
+
+    Params:
+        s: str - The string you want to reverse
+
+    Returns:
+        str: The reversed string
+    """
     arr = s.split(' ')
     temp = []
     for s in arr:

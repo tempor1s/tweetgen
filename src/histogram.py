@@ -27,7 +27,7 @@ def list_histogram(source_file):
         words = f.read().split()
         histo = []
         for word in words:
-            histo_entry = [word, 1]
+            histo_entry = [word, 0]
             for word2 in words:
                 if word == word2:
                     histo_entry[1] += 1
@@ -35,6 +35,45 @@ def list_histogram(source_file):
                 histo.append(histo_entry)
 
         return histo
+
+
+# LMAOOOOOOOOOOOOOOOOOOOOOOOOOO
+@time_it
+def tuple_histogram(source_file):
+    with open(source_file, 'r') as f:
+        words = f.read().split()
+        histo = []
+        for word in words:
+            histo_entry = [word, 0]
+            for word2 in words:
+                if word == word2:
+                    histo_entry[1] += 1
+            if histo_entry not in histo:
+                histo.append(histo_entry)
+        
+        tup = []
+        for item in histo:
+            tup.append(tuple(item))
+
+        return tup
+
+
+def count_histogram(source_file):
+    with open(source_file, 'r') as f:
+        words = f.read().split()
+        histo = []
+        passed_words = []
+        for word in words:
+            count = 0
+            for word2 in words:
+                if word == word2:
+                    count += 1
+            if word not in passed_words:
+                passed_words.append(word)
+                histo.append(count)
+        return histo
+
+
 
 
 def unique_words():
@@ -47,6 +86,7 @@ def frequency():
 
 if __name__ == "__main__":
     # histo = histogram('test.txt')
-    histo = list_histogram('test.txt')
+    # histo = tuple_histogram('test.txt')
+    histo = count_histogram('test.txt')
     print(histo)
     print(len(histo))

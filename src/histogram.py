@@ -3,6 +3,13 @@ from operator import itemgetter
 import os
 import re
 
+
+def get_clean_words(source_file):
+    with open(source_file, 'r') as f:
+        words_file = f.read()
+        clean_words = re.sub(r'[^a-zA-Z\s]', '', words_file)
+        return clean_words.split()
+
 @time_it
 def histogram(source_file):
     """
@@ -17,14 +24,12 @@ def histogram(source_file):
     """
     # Dictonary Implementation - Nothing can beat the performance of this.
     # Also, this will not clean words - so please pass it a corpus that isn't messed up :)
-    with open(source_file, 'r') as f:
-        words = f.read().split()
-        histo = {}
-        for word in words:
-            word = re.sub(r'[^a-zA-Z]', '', word)
-            if word:
-                histo[word] = histo.get(word, 0) + 1
-        return histo
+    words = get_clean_words(source_file)
+    histo = {}
+    for word in words:
+        if word:
+            histo[word] = histo.get(word, 0) + 1
+    return histo
 
 
 @time_it
@@ -48,9 +53,9 @@ def log_histrogram(histogram, filename='log.txt'):
         os.remove(filename)
     except FileNotFoundError:
         pass
-    
+
     with open(filename, 'a+') as f:
-        if type(histogram) == type({}):
+        if type(histogram) == type({}): # Check to see if the type is dictonary
             for key in histogram.keys():
                 f.write(f'{key} {str(histogram.get(key))}\n')
         elif type(histogram) == type([]): # For sorted lists :)
@@ -61,55 +66,52 @@ def log_histrogram(histogram, filename='log.txt'):
 # This is a disgusting approach lmaoooo. Only about 950ms slower than my dictonary version :)
 @time_it
 def list_histogram(source_file):
-    with open(source_file, 'r') as f:
-        words = f.read().split()
-        histo = []
-        for word in words:
-            histo_entry = [word, 0]
-            for word2 in words:
-                if word == word2:
-                    histo_entry[1] += 1
-            if histo_entry not in histo:
-                histo.append(histo_entry)
+    words = get_clean_words(source_file)
+    histo = []
+    for word in words:
+        histo_entry = [word, 0]
+        for word2 in words:
+            if word == word2:
+                histo_entry[1] += 1
+        if histo_entry not in histo:
+            histo.append(histo_entry)
 
-        return histo
+    return histo
 
 # LMAOOOOOOOOOOOOOOOOOOOOOOOOOO
 @time_it
 def tuple_histogram(source_file):
-    with open(source_file, 'r') as f:
-        words = f.read().split()
-        histo = []
-        for word in words:
-            histo_entry = [word, 0]
-            for word2 in words:
-                if word in word2:
-                    histo_entry[1] += 1
-            if histo_entry not in histo:
-                histo.append(histo_entry)
-        
-        tup = []
-        for item in histo:
-            tup.append(tuple(item))
+    words = get_clean_words(source_file)
+    histo = []
+    for word in words:
+        histo_entry = [word, 0]
+        for word2 in words:
+            if word in word2:
+                histo_entry[1] += 1
+        if histo_entry not in histo:
+            histo.append(histo_entry)
+    
+    tup = []
+    for item in histo:
+        tup.append(tuple(item))
 
-        return tup
+    return tup
 
 # I am going to optimize these I swear
 @time_it
 def count_histogram(source_file):
-    with open(source_file, 'r') as f:
-        words = f.read().split()
-        histo = []
-        passed_words = []
+    words = get_clean_words(source_file)
+    max_len = len(max(words, key=len))
+    histo = []
+    for i in range(1, max_len - 1):
+        histo_entry = [i, []]
         for word in words:
-            count = 0
-            for word2 in words:
-                if word == word2:
-                    count += 1
-            if word not in passed_words:
-                passed_words.append(word)
-                histo.append(count)
-        return histo
+            if i == len(word):
+                if word.lower() not in histo_entry[1]:
+                    histo_entry[1].append(word.lower())
+        histo.append(histo_entry)
+    
+    return histo
 
 
 def unique_words(histogram):
@@ -121,8 +123,9 @@ def frequency(word, histogram):
 
 
 if __name__ == "__main__":
-    histo = histogram('test.txt')
-    sorted_histo = sort_histogram(histo)
+    histo = count_histogram('test.txt')
+    print(histo)
+    # sorted_histo = sort_histogram(histo)
     # histo = tuple_histogram('test.txt')
     # histo = count_histogram('test.txt')
-    log_histrogram(sorted_histo)
+    # log_histrogram(sorted_histo)

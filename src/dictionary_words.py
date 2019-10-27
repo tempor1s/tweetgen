@@ -32,7 +32,6 @@ def get_dict_words(num):
     # return ' '.join(rand_words) + '.'
 
 
-@time_it
 def get_words_from_file(path):
     # Fastest version of reading from file
     with open(path, 'r') as f:

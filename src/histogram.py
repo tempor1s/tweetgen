@@ -1,3 +1,6 @@
+from utils import time_it
+
+@time_it
 def histogram(source_file):
     """
     Takes text file as a paramater and returns a histogram data structure that stores each unique word along with
@@ -17,6 +20,23 @@ def histogram(source_file):
             histo[word] = histo.get(word, 0) + 1
         return histo
 
+# This is a disgusting approach lmaoooo. Only about 950ms slower than my dictonary version :)
+@time_it
+def list_histogram(source_file):
+    with open(source_file, 'r') as f:
+        words = f.read().split()
+        histo = []
+        for word in words:
+            histo_entry = [word, 1]
+            for word2 in words:
+                if word == word2:
+                    histo_entry[1] += 1
+            if histo_entry not in histo:
+                histo.append(histo_entry)
+
+        return histo
+
+
 def unique_words():
     pass
 
@@ -26,6 +46,7 @@ def frequency():
 
 
 if __name__ == "__main__":
-    histo = histogram('test.txt')
+    # histo = histogram('test.txt')
+    histo = list_histogram('test.txt')
     print(histo)
     print(len(histo))

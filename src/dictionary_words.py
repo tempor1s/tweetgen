@@ -1,55 +1,48 @@
 from sys import argv
 from random import choice, randint
 from utils import time_it
-from linecache import getline
 
 
 @time_it
-def get_dict_words(num):
-    """Get x amount of random words from the file"""
-    # Commented out are other implementations to try to be faster using caching an
-    path = "/usr/share/dict/words"
-    with open(path, "r") as f:
-        all_words = f.read().split('\n')  # .readlines()  or .readline() in a for loop
-        random_words = []
-        for i in range(int(num)):
-            random_words.append(choice(all_words))
-        return ' '.join(random_words).capitalize() + '.'
-
-        # Work on this a bit more and try different variations
-        # all_words = dict((x, x) for x in f.read().split('\n')) 
-        # random_words = []
-        # for i in range(int(num)):
-        #     random_words.append(choice(list(all_words.keys())))
-        # return ' '.join(random_words) + '.'
-    
-
-    # This in theory is the fastest because of caching, but would have to get length of file or hardcode it
-    # rand_words = []
-    # for i in range(int(num)):
-    #     word = getline(path, randint(0, 200000))[:-1]
-    #     rand_words.append(word)
-    # return ' '.join(rand_words) + '.'
-
-
 def get_words_from_file(path):
-    # Fastest version of reading from file
+    """
+    Get words from a file
+
+    Params:
+        path: str - The path to the file that you want to read from. Can also be a file name
+
+    Returns:
+        list: A list of all the words in that file
+    """
     with open(path, 'r') as f:
         return f.read().split('\n')
-    # This version is about 60ms slower every time - better space complexity i assume because doesnt have to store as string then convert to arr
-    # with open(path, 'r') as f:
-    #     return f.readlines()
 
 
 @time_it
 def get_set_words_from_file(path):
-    # Use a generator to put all lines into a set and return
+    """
+    Get all the words from a file as a set
+
+    Params:
+        path: str - The path to the file that you want to read from. Can also be the file name
+
+    Returns:
+        set: A set of all the words in that file
+    """
     return set(line.strip() for line in open('/usr/share/dict/words'))
 
 
 @time_it
-def get_random_words(num):
-    path = "/usr/share/dict/words"
+def get_random_words(num, path):
+    """
+    Get x amount of random words from a file
+
+    Params:
+        num: int - The amount of words that you want to get
+        path: str - The path to the file that you want to read from. Can also be the file name
+
+    Returns: str - A string with the first letter capatalized and a period at the end. 'Sudo sentence'
+    """
     words = get_words_from_file(path)
 
     random_words = []
@@ -58,16 +51,20 @@ def get_random_words(num):
     return ' '.join(random_words).capitalize() + '.'
 
 
+def get_random_word(path="/usr/share/dict/words"):
+    """
+    Get a single random word from a file
 
-def get_random_word():
-    path = "/usr/share/dict/words"
-    words = get_words_from_file(path)
+    Params:
+        path: str - The path to the file you want to read from. Can also be a file name
 
-    return choice(words)
+    Returns:
+        str: The random word
+    """
+    return choice(get_words_from_file(path))
 
 
 if __name__ == '__main__':
-    # Only get 1 arg and then convert it to int to get that amount of words
     args = argv[1:3]
-    words = get_random_words(args[0])
-    print(words)
+    path = '/usr/share/dict/words'
+    words = get_random_words(args[0], path)

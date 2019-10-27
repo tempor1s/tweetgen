@@ -56,10 +56,10 @@ def log_histrogram(histogram, filename='log.txt'):
         pass
 
     with open(filename, 'a+') as f:
-        if type(histogram) == type({}):  # Check to see if the type is dictonary
+        if isinstance(histogram, dict):  # Check to see if the type is dictonary
             for key in histogram.keys():
                 f.write(f'{key} {str(histogram.get(key))}\n')
-        elif type(histogram) == type([]):  # For sorted lists :)
+        elif isinstance(histogram, list):  # For sorted lists :)
             for item in histogram:
                 f.write(f'{item[0]} {item[1]}\n')
 
@@ -137,4 +137,5 @@ def frequency(word, histogram):
 
 
 if __name__ == "__main__":
-    print(get_histogram_from_log('log.txt'))
+    histo = tuple_histogram('test.txt')
+    log_histrogram(histo)

@@ -10,6 +10,7 @@ def get_clean_words(source_file):
         clean_words = re.sub(r'[^a-zA-Z\s]', '', words_file)
         return clean_words.split()
 
+
 @time_it
 def histogram(source_file):
     """
@@ -55,12 +56,24 @@ def log_histrogram(histogram, filename='log.txt'):
         pass
 
     with open(filename, 'a+') as f:
-        if type(histogram) == type({}): # Check to see if the type is dictonary
+        if type(histogram) == type({}):  # Check to see if the type is dictonary
             for key in histogram.keys():
                 f.write(f'{key} {str(histogram.get(key))}\n')
-        elif type(histogram) == type([]): # For sorted lists :)
+        elif type(histogram) == type([]):  # For sorted lists :)
             for item in histogram:
                 f.write(f'{item[0]} {item[1]}\n')
+
+
+@time_it
+def get_histogram_from_log(filename):
+    with open(filename, 'r') as f:
+        # Remove any whitespace at beginning and end of file
+        words = f.read().strip().split('\n')
+        histo = {}
+        for item in words:
+            word, num = item.split()
+            histo[word] = num
+        return histo
 
 
 # This is a disgusting approach lmaoooo. Only about 950ms slower than my dictonary version :)
@@ -78,6 +91,7 @@ def list_histogram(source_file):
 
     return histo
 
+
 # LMAOOOOOOOOOOOOOOOOOOOOOOOOOO
 @time_it
 def tuple_histogram(source_file):
@@ -90,7 +104,7 @@ def tuple_histogram(source_file):
                 histo_entry[1] += 1
         if histo_entry not in histo:
             histo.append(histo_entry)
-    
+
     tup = []
     for item in histo:
         tup.append(tuple(item))
@@ -110,7 +124,7 @@ def count_histogram(source_file):
                 if word.lower() not in histo_entry[1]:
                     histo_entry[1].append(word.lower())
         histo.append(histo_entry)
-    
+
     return histo
 
 
@@ -123,9 +137,4 @@ def frequency(word, histogram):
 
 
 if __name__ == "__main__":
-    histo = count_histogram('test.txt')
-    print(histo)
-    # sorted_histo = sort_histogram(histo)
-    # histo = tuple_histogram('test.txt')
-    # histo = count_histogram('test.txt')
-    # log_histrogram(sorted_histo)
+    print(get_histogram_from_log('log.txt'))

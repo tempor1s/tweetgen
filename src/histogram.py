@@ -1,6 +1,7 @@
 from utils import time_it
 from operator import itemgetter
 import os
+import re
 
 @time_it
 def histogram(source_file):
@@ -16,12 +17,13 @@ def histogram(source_file):
     """
     # Dictonary Implementation - Nothing can beat the performance of this.
     # Also, this will not clean words - so please pass it a corpus that isn't messed up :)
-    # TODO: Remove all non-text characters from word before appending.
     with open(source_file, 'r') as f:
         words = f.read().split()
         histo = {}
         for word in words:
-            histo[word] = histo.get(word, 0) + 1
+            word = re.sub(r'[^a-zA-Z]', '', word)
+            if word:
+                histo[word] = histo.get(word, 0) + 1
         return histo
 
 

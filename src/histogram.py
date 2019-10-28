@@ -185,6 +185,7 @@ def count_histogram(source_file):
 def unique_words(histogram):
     """
     Return the amount of unique words in a histogram.  Works for dicts, lists and tuples
+    Does not work for count histogram
 
     Params:
         histogram: dict, list, tuple - The histogram you want to get the unique amount of words from
@@ -192,7 +193,21 @@ def unique_words(histogram):
     Returns:
         int: The amount of unique words in a histogram
     """
-    return len(histogram)
+    if isinstance(histogram, dict):
+        count = 0
+        for word in histogram.keys():
+            if histogram.get(word) == 1:
+                count += 1
+
+        return count
+    elif isinstance(histogram, list) or isinstance(histogram, tuple):
+        count = 0
+        for word in histogram:
+            if isinstance(word[1], int) and word[1] == 1:
+                count += 1
+        
+        return count
+
 
 
 def frequency(word, histogram):

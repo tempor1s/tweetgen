@@ -40,8 +40,7 @@ def histogram(source_file):
     words = get_clean_words(source_file)
     histo = {}
     for word in words:
-        if word:
-            histo[word] = histo.get(word, 0) + 1
+        histo[word] = histo.get(word, 0) + 1
     return histo
 
 
@@ -166,7 +165,7 @@ def tuple_histogram(source_file):
 @time_it
 def count_histogram(source_file):
     """
-    Get a list of lists that contain a number and the words that are thast length
+    Get a list of lists that contain a count and the words that have that count
 
     Params:
         source_file: file - The file that you want to get a count histogram from
@@ -175,19 +174,19 @@ def count_histogram(source_file):
         list: A list of lists that contain the amount of times that a word appears
     """
     words = get_clean_words(source_file)
-    max_len = len(max(words, key=len))
-    histo = []
-    for i in range(1, max_len + 1):
-        histo_entry = [i, []]
-        for word in words:
-            if i == len(word):
-                if word not in histo_entry[1]:
-                    histo_entry[1].append(word)
-        # Do not append any empty entries
-        if len(histo_entry[1]) > 0:
-            histo.append(histo_entry)
 
-    return histo
+    histo = histogram(source_file)
+    max_len = len(max(histo.keys(), key=len))
+    new_histo = []
+
+    for i in range(1, max_len + 1):
+        words = []
+        for key in histo.keys():
+            if histo.get(key) == i:
+                words.append(key)
+        new_histo.append((i, words))
+    
+    return new_histo
 
 
 def unique_words(histogram):
@@ -235,3 +234,8 @@ def frequency(word, histogram):
             if entry[0] == word:
                 return entry[1]
         return 0
+
+
+if __name__ == "__main__":
+   histo = count_histogram('test.txt') 
+   print(histo)

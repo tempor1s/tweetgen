@@ -1,2 +1,3 @@
 # Tweet Generator
-## Built using a markov language chain.
+
+## Beginning of Tweet Generator project that uses a markov language chain to generate unique tweets. WIP

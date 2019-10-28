@@ -185,7 +185,7 @@ def count_histogram(source_file):
                     histo_entry[1].append(word.lower())
         # Do not append any empty entries
         if len(histo_entry[1]) > 0:
-            histo.append(histo_entry)        
+            histo.append(histo_entry)
 
     return histo
 
@@ -213,9 +213,8 @@ def unique_words(histogram):
         for word in histogram:
             if isinstance(word[1], int) and word[1] == 1:
                 count += 1
-        
-        return count
 
+        return count
 
 
 def frequency(word, histogram):

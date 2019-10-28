@@ -222,9 +222,19 @@ def frequency(word, histogram):
     Returns the amount of times a specific word appears in a histogram
 
     Params:
-        histogram: dict - The histogram you want to read from
+        histogram: dict, list, tuple - The histogram you want to read from
 
     Returns:
         int: The amount of times that the word appears
     """
-    return histogram.get(word, 0)
+    if isinstance(histogram, dict):
+        return histogram.get(word, 0)
+    elif isinstance(histogram, list) or isinstance(histogram, tuple):
+        for entry in histogram:
+            if entry[0] == word:
+                return entry[1]
+
+
+if __name__ == "__main__":
+    histo = tuple_histogram('test.txt')
+    print(frequency('and', histo))

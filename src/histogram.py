@@ -19,7 +19,7 @@ def get_clean_words(source_file):
         File Not Found if source file does not exist
     """
     with open(source_file, 'r') as f:
-        words_file = f.read()
+        words_file = f.read().lower()
         clean_words = re.sub(r'[^a-zA-Z\s]', '', words_file)
         return clean_words.split()
 
@@ -227,14 +227,16 @@ def frequency(word, histogram):
     Returns:
         int: The amount of times that the word appears
     """
+    word = word.lower()
     if isinstance(histogram, dict):
         return histogram.get(word, 0)
     elif isinstance(histogram, list) or isinstance(histogram, tuple):
         for entry in histogram:
             if entry[0] == word:
                 return entry[1]
+        return 0
 
 
 if __name__ == "__main__":
-    histo = tuple_histogram('test.txt')
-    print(frequency('and', histo))
+    histo = histogram('test.txt')
+    print(frequency('The', histo))

@@ -58,11 +58,11 @@ def sort_histogram(histogram):
     """
     if isinstance(histogram, dict):
         listed_histo = []
-        for key in dict_histogram.keys():
-            listed_histo.append([key, dict_histogram.get(key)])
-        return sorted(listed_histo, key=itemgetter(1), reverse=True)
-    elif isinstance(histogram, list):
-        return sorted(histogram, key=itemgetter(1), reverse=True)
+        for key in histogram.keys():
+            listed_histo.append([key, histogram.get(key)])
+        return sorted(listed_histo, key=itemgetter(1), reverse=False)
+    elif isinstance(histogram, list) or isinstance(histogram, tuple):
+        return sorted(histogram, key=itemgetter(1), reverse=False)
     else:
         return None
 
@@ -181,8 +181,8 @@ def count_histogram(source_file):
         histo_entry = [i, []]
         for word in words:
             if i == len(word):
-                if word.lower() not in histo_entry[1]:
-                    histo_entry[1].append(word.lower())
+                if word not in histo_entry[1]:
+                    histo_entry[1].append(word)
         # Do not append any empty entries
         if len(histo_entry[1]) > 0:
             histo.append(histo_entry)
@@ -235,8 +235,3 @@ def frequency(word, histogram):
             if entry[0] == word:
                 return entry[1]
         return 0
-
-
-if __name__ == "__main__":
-    histo = histogram('test.txt')
-    print(frequency('The', histo))

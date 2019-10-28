@@ -149,12 +149,18 @@ def tuple_histogram(source_file):
         list: A list of tuples that contain the amount of a times the word appears
     """
     # TODO: Rewrite this to not use list_histogram
-    histo = list_histogram(source_file)
-    tup = []
-    for item in histo:
-        tup.append(tuple(item))
+    words = get_clean_words(source_file)
+    histo = []
+    for word in words:
+        count = 0
+        for word2 in words:
+            if word == word2:
+                count += 1
+        tup = (word, count)
+        if tup not in histo:
+            histo.append(tup)
 
-    return tup
+    return histo
 
 
 @time_it
@@ -171,13 +177,15 @@ def count_histogram(source_file):
     words = get_clean_words(source_file)
     max_len = len(max(words, key=len))
     histo = []
-    for i in range(1, max_len - 1):
+    for i in range(1, max_len + 1):
         histo_entry = [i, []]
         for word in words:
             if i == len(word):
                 if word.lower() not in histo_entry[1]:
                     histo_entry[1].append(word.lower())
-        histo.append(histo_entry)
+        # Do not append any empty entries
+        if len(histo_entry[1]) > 0:
+            histo.append(histo_entry)        
 
     return histo
 

@@ -1,5 +1,6 @@
 from histogram import histogram
 from random import choice
+from sys import argv
 
 def sample(histogram):
     """
@@ -18,5 +19,6 @@ def sample(histogram):
 
 
 if __name__ == '__main__':
-    histo = histogram('test.txt')
+    args = argv[1:3]
+    histo = histogram(args[0])
     print(sample(histo))

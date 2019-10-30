@@ -24,6 +24,7 @@ def sample(histogram, amount=1):
         return choice(histogram)[0]
 
 
+@time_it
 def weighted_sample(histogram, amount=1):
     """
     Return a random word from a histogram that is weighted
@@ -41,7 +42,7 @@ def weighted_sample(histogram, amount=1):
 
 
 def choose(population, weights, k=1):
-    cum_weights = list(accum(weights))
+    cum_weights = list(get_weighted(weights))
     total = cum_weights[-1]
     return [population[bisect(cum_weights, random() * total)] for i in range(k)]
 
@@ -74,7 +75,7 @@ if __name__ == '__main__':
     args = argv[1:4]
     histo = histogram(args[0])
     total = int(args[1])
-    new_sample = ez_sample(histo, total)
+    new_sample = weighted_sample(histo, total)
 
     new_histo = {}
     for samp in new_sample:

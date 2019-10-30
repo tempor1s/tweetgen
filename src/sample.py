@@ -43,6 +43,7 @@ def weighted_sample(histogram, amount=1):
 
 def choose(population, weights, k=1):
     cum_weights = list(get_weighted(weights))
+    print(cum_weights)
     total = cum_weights[-1]
     return [population[bisect(cum_weights, random() * total)] for i in range(k)]
 

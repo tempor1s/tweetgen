@@ -2,7 +2,6 @@ from histogram import histogram, sort_histogram
 from random import random, choice, choices, uniform
 from sys import argv
 from bisect import bisect
-from itertools import accumulate
 from utils import time_it
 
 
@@ -25,22 +24,9 @@ def sample(histogram, amount=1):
         return choice(histogram)[0]
 
 
-def accum(iterable):
-    it = iter(iterable)
-    total = None
-    try:
-        total = next(it)
-    except StopIteration:
-        return
-    yield total
-    for el in it:
-        total = total += el
-
-
-@time_it
-def ez_sample(histogram, amount=1):
+def weighted_sample(histogram, amount=1):
     """
-    The ez way to return a random word from a histogram that is weighted
+    Return a random word from a histogram that is weighted
 
     Params:
         histogram: dict, list, tuple - The histogram you want k random words from
@@ -49,27 +35,39 @@ def ez_sample(histogram, amount=1):
         list: list of k random words
     """
     if isinstance(histogram, dict):
-        return choices_implementation(population=list(histogram.keys()), weights=list(histogram.values()), k=amount)
+        return choose(population=list(histogram.keys()), weights=list(histogram.values()), k=amount)
     elif isinstance(histogram, list) or isinstance(histogram, tuple):
-        return choices_implementation(population=[val[0] for val in histogram], weights=[val[1] for val in histogram], k=amount)
+        return choose(population=[val[0] for val in histogram], weights=[val[1] for val in histogram], k=amount)
 
 
-def choices_implementation(population, weights=None, cum_weights=None, k=1):
-    if cum_weights is None:
-        if weights is None:
-            total = len(population)
-            return [population[int(random * total)] for i in range(k)]
-        cum_weights = list(accumulate(weights))
-        print(cum_weights)
-    elif weights is not None:
-        raise TypeError('Cannot specify both weights and cumulative weights')
-    if len(cum_weights) != len(population):
-        raise ValueError('The number of weights does not match the population')
+def choose(population, weights, k=1):
+    cum_weights = list(accum(weights))
     total = cum_weights[-1]
-    hi = len(cum_weights) - 1
-    print(random() * total)
-    print(population[bisect(cum_weights, random() * total, 0, hi)])
-    return [population[bisect(cum_weights, random() * total, 0, hi)] for i in range(k)]
+    return [population[bisect(cum_weights, random() * total)] for i in range(k)]
+
+
+def get_weighted(iterable):
+    """
+    Similar to python intertool but stripped down to be specific for use in getting weights
+
+    Arguments:
+        iterable: list, tuple - What you want to get the weighted values from
+
+    Yields:
+        New combined total for each item in interable
+    """
+    it = iter(iterable)
+    total = None
+
+    try:
+        total = next(it)
+    except StopIteration:
+        return
+    yield total
+
+    for el in it:
+        total = total + el
+        yield total
 
 
 if __name__ == '__main__':
@@ -87,8 +85,3 @@ if __name__ == '__main__':
 
     for key in new_histo:
         print(f'{key} => {new_histo.get(key)} => {new_histo.get(key) * total}')
-    # tot_percent = 0
-    # for key in new_histo:
-    #     tot_percent += new_histo.get(key)
-    
-    # print(tot_percent)

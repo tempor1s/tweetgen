@@ -1,6 +1,8 @@
 from histogram import histogram, sort_histogram
-from random import choice, choices
+from random import random, choice, choices
 from sys import argv
+from bisect import bisect
+from itertools import accumulate
 
 def sample(histogram, amount=1):
     """
@@ -28,10 +30,24 @@ def ez_sample(histogram, amount=1):
         list: list of k random words
     """
     if isinstance(histogram, dict):
-        # return choice(list(histogram.keys()))
-        return choices(list(histogram.keys()), list(histogram.values()), k=amount)
+        return choices_implementation(population=list(histogram.keys()), weights=list(histogram.values()), k=amount)
     elif isinstance(histogram, list) or isinstance(histogram, tuple):
-        return choices([val[0] for val in histogram], [val[1] for val in histogram], k=amount)
+        return choices_implementation(population=[val[0] for val in histogram], weights=[val[1] for val in histogram], k=amount)
+
+
+def choices_implementation(population, weights=None, cum_weights=None, k=1):
+    if cum_weights is None:
+        if weights is None:
+            total = len(population)
+            return [population[int(random * total)] for i in range(k)]
+        cum_weights = list(accumulate(weights))
+    elif weights is not None:
+        raise TypeError('Cannot specify both weights and cumulative weights')
+    if len(cum_weights) != len(population):
+        raise ValueError('The number of weights does not match the population')
+    total = cum_weights[-1]
+    hi = len(cum_weights) - 1
+    return [population[bisect(cum_weights, random() * total, 0, hi)] for i in range(k)]
 
 
 if __name__ == '__main__':

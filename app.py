@@ -5,7 +5,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def index():
-    sentence = get_sentence('lib/txt_files/test.txt')
+    sentence = get_sentence('lib/txt_files/sherlock.txt', amount=20)
     return render_template('index.html', sentence=sentence)
 
 if __name__ == "__main__":

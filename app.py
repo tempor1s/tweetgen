@@ -25,10 +25,10 @@ def index():
 
 
 @app.route('/favorites', methods=['GET', 'POST'])
-def favorites_viewe():
+def favorites_view():
     if request.method == 'POST':
         sentence = request.form.get('sentence')
-        favorites.insert_one({'sentence': sentence})
+        db.favorites.insert_one({'sentence': sentence})
 
         return jsonify({'sentence': sentence})
 
@@ -36,4 +36,4 @@ def favorites_viewe():
 
 
 if __name__ == "__main__":
-    app.run(debug=True, host='0.0.0.0', port=os.environ.get('POST', 5000))
+    app.run(debug=True, host='0.0.0.0', port=os.environ.get('PORT', 5000))

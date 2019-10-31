@@ -1,8 +1,8 @@
-from histogram import histogram, sort_histogram
+from lib.histogram import histogram, sort_histogram
+from lib.utils import time_it
 from random import random, choice, choices, uniform
 from sys import argv
 from bisect import bisect
-from utils import time_it
 
 
 def sample(histogram, amount=1):
@@ -77,6 +77,13 @@ def get_weighted(iterable):
     for el in it:
         total = total + el
         yield total
+
+
+def get_sentence(source_file, amount=10):
+    histo = histogram(source_file)
+    weighted_words = weighted_sample(histo, amount)
+
+    return ' '.join(weighted_words).capitalize() + '.'
 
 
 if __name__ == '__main__':

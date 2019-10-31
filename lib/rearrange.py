@@ -1,6 +1,6 @@
 from sys import argv
 from random import shuffle, randint
-from utils import time_it
+from lib.utils import time_it
 
 
 @time_it

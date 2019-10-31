@@ -1,4 +1,4 @@
-from utils import time_it
+from lib.utils import time_it
 from operator import itemgetter
 from random import choice
 import os

@@ -1,7 +1,7 @@
 from itertools import permutations
 from sys import argv
 from dictionary_words import get_set_words_from_file
-from utils import time_it
+from lib.utils import time_it
 
 
 @time_it

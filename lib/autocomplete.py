@@ -1,5 +1,5 @@
 from dictionary_words import get_words_from_file
-from utils import time_it
+from lib.utils import time_it
 from sys import argv
 import random
 

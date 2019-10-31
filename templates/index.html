@@ -7,7 +7,7 @@
     </h2>
     <br /><br />
     <h4 id="sentence">{{ sentence }}</h4>
-
+    <br />
     <div>
         Sentence Length:
         <input
@@ -19,6 +19,10 @@
         <button class="btn btn-primary" id="generate">
             Generate new sentence
         </button>
+        <button class="btn btn-info" id='favorite'>
+            Mark sentence as favorite
+        </button>
+        <a class="btn btn-dark" href="/favorites">View Favorites</a>
     </div>
 </div>
 {% endblock %}

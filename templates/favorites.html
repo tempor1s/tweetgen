@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block content %}
+<div>
+    <ul>
+        {% for sentence in sentences %}
+            <li>{{ sentence }}</li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock content %}

@@ -5,9 +5,9 @@ app = Flask(__name__)
 
 @app.route('/')
 def index():
-    num = int(request.args.get('num')) or 10
-    sentence = get_sentence('lib/txt_files/sherlock.txt', num)
-    return render_template('index.html', sentence=sentence, num=num)
+    num = request.args.get('num', 10)
+    sentence = get_sentence('lib/txt_files/sherlock.txt', amount=int(num))
+    return render_template('index.html', sentence=sentence, num=int(num))
 
 if __name__ == "__main__":
     app.run(debug=True)

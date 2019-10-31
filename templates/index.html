@@ -6,14 +6,19 @@
         below:
     </h2>
     <br /><br />
-    <h4>{{ sentence }}</h4>
-    <form method="GET" action="/">
-        Sentence Length:     <input
+    <h4 id="sentence">{{ sentence }}</h4>
+
+    <div>
+        Sentence Length:
+        <input
+            id="input_field"
             type="number"
             name="num"
             value="{{ num }}"
         /><br /><br />
-        <button type="submit">Generate new sentence</button>
-    </form>
+        <button class="btn btn-primary" id="generate">
+            Generate new sentence
+        </button>
+    </div>
 </div>
 {% endblock %}

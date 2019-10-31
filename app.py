@@ -1,13 +1,19 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, jsonify
 from lib.sample import get_sentence
 
 app = Flask(__name__)
 
-@app.route('/')
+@app.route('/', methods=['GET', 'POST'])
 def index():
-    num = request.args.get('num', 10)
-    sentence = get_sentence('lib/txt_files/sherlock.txt', amount=int(num))
-    return render_template('index.html', sentence=sentence, num=int(num))
+    if request.method == 'POST':
+        num = request.form.get('num')
+        sentence = get_sentence('lib/txt_files/sherlock.txt', int(num))
+        
+        return jsonify({'sentence': sentence})
+
+
+    sentence = get_sentence('lib/txt_files/sherlock.txt', 10)
+    return render_template('index.html', sentence=sentence, num=10)
 
 if __name__ == "__main__":
     app.run(debug=True)

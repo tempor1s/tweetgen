@@ -11,4 +11,16 @@ $(document).ready(function() {
             $('#sentence').text(data.sentence);
         });
     });
+
+    $("#favorite").on('click', function() {
+        let sentence = $('#sentence').text();
+        req = $.ajax({
+            url: '/favorites',
+            type: 'POST',
+            data: {sentence: sentence}
+        })
+        req.done(function(data) {
+            console.log('req done')
+        });
+    });
 });

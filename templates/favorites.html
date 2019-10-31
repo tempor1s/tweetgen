@@ -1,10 +1,11 @@
 {% extends 'base.html' %}
 {% block content %}
 <div>
-    <ul>
-        {% for sentence in sentences %}
-            <li>{{ sentence }}</li>
-        {% endfor %}
-    </ul>
+    <h1>List of favorited sentences!</h1>
+    <br>
+    {% for sentence in sentences %}
+        <p>{{ sentence.sentence }}</p>
+    {% endfor %}
+    <a class="btn btn-primary" href="/">Back to home</a>
 </div>
 {% endblock content %}

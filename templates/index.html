@@ -1,8 +1,19 @@
-{% extends 'base.html' %}
-{% block content %}
+{% extends 'base.html' %} {% block content %}
 <div>
     <h1>Tweet Gen</h1>
-    <h2>Sentence Generator using weighted probablity. Generated sentence is below:</h2><br><br>
+    <h2>
+        Sentence Generator using weighted probablity. Generated sentence is
+        below:
+    </h2>
+    <br /><br />
     <h4>{{ sentence }}</h4>
+    <form method="GET" action="/">
+        Sentence Length:     <input
+            type="number"
+            name="num"
+            value="{{ num }}"
+        /><br /><br />
+        <button type="submit">Generate new sentence</button>
+    </form>
 </div>
 {% endblock %}

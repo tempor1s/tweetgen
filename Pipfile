@@ -10,6 +10,7 @@ autopep8 = "*"
 flask = "*"
 requests = "*"
 python-dotenv = "*"
+gunicorn = "*"
 
 [requires]
 python_version = "3.7"

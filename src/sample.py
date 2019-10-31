@@ -35,16 +35,23 @@ def weighted_sample(histogram, amount=1):
     Returns:
         list: list of k random words
     """
+    # Check if the histogram is a dict
     if isinstance(histogram, dict):
         return choose(population=list(histogram.keys()), weights=list(histogram.values()), k=amount)
+
+    # Check if it is tuple or list
     elif isinstance(histogram, list) or isinstance(histogram, tuple):
-        return choose(population=[val[0] for val in histogram], weights=[val[1] for val in histogram], k=amount)
+        population = [val[0] for val in histogram]
+        weights = [val[1] for val in histogram]
+        
+        return choose(population=population, weights=weights, k=amount)
+        # return choose(population=[val[0] for val in histogram], weights=[val[1] for val in histogram], k=amount)
 
 
 def choose(population, weights, k=1):
     cum_weights = list(get_weighted(weights))
-    print(cum_weights)
     total = cum_weights[-1]
+
     return [population[bisect(cum_weights, random() * total)] for i in range(k)]
 
 

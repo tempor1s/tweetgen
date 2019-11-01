@@ -1,6 +1,5 @@
 from lib.histogram import histogram, sort_histogram
-from lib.utils import time_it
-from random import random, choice, choices, uniform
+from random import random, choice, choices, uniform, randint
 from sys import argv
 from bisect import bisect
 
@@ -24,7 +23,16 @@ def sample(histogram, amount=1):
         return choice(histogram)[0]
 
 
-@time_it
+def simple_weighted(histogram):
+    rand_val = randint(1, len(histogram.keys()))
+    total = 0
+    for k, v in histogram.items():
+        total += v
+        if rand_val <= total:
+            return k
+    assert False, 'unreachable'
+
+
 def weighted_sample(histogram, amount=1):
     """
     Return a random word from a histogram that is weighted
@@ -43,7 +51,7 @@ def weighted_sample(histogram, amount=1):
     elif isinstance(histogram, list) or isinstance(histogram, tuple):
         population = [val[0] for val in histogram]
         weights = [val[1] for val in histogram]
-        
+
         return choose(population=population, weights=weights, k=amount)
         # return choose(population=[val[0] for val in histogram], weights=[val[1] for val in histogram], k=amount)
 
@@ -79,25 +87,24 @@ def get_weighted(iterable):
         yield total
 
 
-def get_sentence(source_file, amount=10):
-    histo = histogram(source_file)
+def get_sentence(histo, amount=10):
     weighted_words = weighted_sample(histo, amount)
 
     return ' '.join(weighted_words).capitalize() + '.'
 
+# if __name__ == '__main__':
+#     # python3 sample.py example.txt 1000 False
+#     args = argv[1:5]
+#     histo = histogram(args[0], args[2])
+#     total = int(args[1])
+#     new_sample = weighted_sample(histo, total)
 
-if __name__ == '__main__':
-    args = argv[1:4]
-    histo = histogram(args[0])
-    total = int(args[1])
-    new_sample = weighted_sample(histo, total)
+#     new_histo = {}
+#     for samp in new_sample:
+#         new_histo[samp] = new_histo.get(samp, 0) + 1
 
-    new_histo = {}
-    for samp in new_sample:
-        new_histo[samp] = new_histo.get(samp, 0) + 1
+#     for key in new_histo:
+#         new_histo[key] = new_histo.get(key) / total
 
-    for key in new_histo:
-        new_histo[key] = new_histo.get(key) / total
-
-    for key in new_histo:
-        print(f'{key} => {new_histo.get(key)} => {new_histo.get(key) * total}')
+#     for key in new_histo:
+#         print(f'{key} => {new_histo.get(key)} => {new_histo.get(key) * total}')

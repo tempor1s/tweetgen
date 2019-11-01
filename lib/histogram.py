@@ -1,4 +1,3 @@
-from lib.utils import time_it
 from operator import itemgetter
 from random import choice
 import os
@@ -25,8 +24,7 @@ def get_clean_words(source_file):
         return clean_words.split()
 
 
-@time_it
-def histogram(source_file):
+def histogram(source_file, vowels=False):
     """
     Takes text file as a paramater and returns a histogram data structure that stores each unique word along with
     the number of times that the word appears in the source text
@@ -42,10 +40,14 @@ def histogram(source_file):
     histo = {}
     for word in words:
         histo[word] = histo.get(word, 0) + 1
+
+    if vowels:
+        for word in histo.keys():
+            if set('aeiou').intersection(word.lower()):
+                histo[word] = histo.get(word) + 1
     return histo
 
 
-@time_it
 def sort_histogram(histogram):
     """
     Sort a list or dictonary histogram with from greatest amount of appearances to least
@@ -67,7 +69,6 @@ def sort_histogram(histogram):
         return None
 
 
-@time_it
 def log_histrogram(histogram, filename='log.txt'):
     """
     Log all entries in a histogram to a .txt file. Supports both dictonary and list histogram
@@ -92,7 +93,6 @@ def log_histrogram(histogram, filename='log.txt'):
                 f.write(f'{item[0]} {item[1]}\n')
 
 
-@time_it
 def get_histogram_from_log(filename):
     """
     Get entries from a histogram log file and put them into a dictonary
@@ -113,7 +113,6 @@ def get_histogram_from_log(filename):
         return histo
 
 
-@time_it
 def list_histogram(source_file):
     """
     Get a list version of a histogram from a text file
@@ -137,7 +136,6 @@ def list_histogram(source_file):
     return histo
 
 
-@time_it
 def tuple_histogram(source_file):
     """
     Get a tuple version of a histogram from a text file
@@ -163,7 +161,6 @@ def tuple_histogram(source_file):
     return histo
 
 
-@time_it
 def count_histogram(source_file):
     """
     Get a list of lists that contain a count and the words that have that count
@@ -186,7 +183,7 @@ def count_histogram(source_file):
             if histo.get(key) == i:
                 words.append(key)
         new_histo.append((i, words))
-    
+
     return new_histo
 
 

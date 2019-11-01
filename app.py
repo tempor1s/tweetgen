@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, jsonify, redirect, url_for
 from lib.sample import get_sentence
+from lib.histogram import histogram
 from pymongo import MongoClient
 import os
 
@@ -14,14 +15,18 @@ favorites = db.favorites
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
-    if request.method == 'POST':
-        num = request.form.get('num')
-        sentence = get_sentence('lib/txt_files/sherlock.txt', int(num))
+    path = 'lib/txt_files/test.txt'
+    num = request.form.get('num', 10)
+    #TODO: Implement vowel weighting check in ajax request and html
+    vowel_weight = request.form.get('vowel', False)
 
+    histo = histogram(path, vowel_weight)
+    sentence = get_sentence(histo, int(num))
+
+    if request.method == 'POST':
         return jsonify({'sentence': sentence})
 
-    sentence = get_sentence('lib/txt_files/sherlock.txt', 10)
-    return render_template('index.html', sentence=sentence, num=10)
+    return render_template('index.html', sentence=sentence, num=num)
 
 
 @app.route('/favorites', methods=['GET', 'POST'])

@@ -1,9 +1,7 @@
 from sys import argv
 from random import choice, randint
-from lib.utils import time_it
 
 
-@time_it
 def get_words_from_file(path):
     """
     Get words from a file
@@ -18,7 +16,6 @@ def get_words_from_file(path):
         return f.read().split('\n')
 
 
-@time_it
 def get_set_words_from_file(path):
     """
     Get all the words from a file as a set
@@ -32,7 +29,6 @@ def get_set_words_from_file(path):
     return set(line.strip() for line in open('/usr/share/dict/words'))
 
 
-@time_it
 def get_random_words(num, path):
     """
     Get x amount of random words from a file

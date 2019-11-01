@@ -1,10 +1,8 @@
 from itertools import permutations
 from sys import argv
 from dictionary_words import get_set_words_from_file
-from lib.utils import time_it
 
 
-@time_it
 def get_anagram(s):
     """
     Return a list of all character permutations with a given word
@@ -18,7 +16,6 @@ def get_anagram(s):
     return set([''.join(perm) for perm in permutations(s)])
 
 
-@time_it
 def get_real_anagram(s):
     """
     Get all the anagrams for a given word

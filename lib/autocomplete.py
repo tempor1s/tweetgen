@@ -1,10 +1,8 @@
 from dictionary_words import get_words_from_file
-from lib.utils import time_it
 from sys import argv
 import random
 
 
-@time_it
 def autocomplete(s):
     """
     Get all words that start with a certain string. Basic autocomplete

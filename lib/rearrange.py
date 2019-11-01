@@ -1,9 +1,7 @@
 from sys import argv
 from random import shuffle, randint
-from lib.utils import time_it
 
 
-@time_it
 def rearrange(arr):
     """
     Rearrange a list.  Very similar to the built in python shuffle - Fisher yates

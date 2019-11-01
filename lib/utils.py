@@ -1,5 +1,6 @@
 import time
 
+
 def time_it(func):
     """
     A wrapper function that is used to get the time that a function takes

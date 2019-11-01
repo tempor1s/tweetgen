@@ -11,15 +11,21 @@
     <div>
         Sentence Length:
         <input
-            id="input_field"
+            id="num_field"
             type="number"
             name="num"
             value="{{ num }}"
-        /><br /><br />
+        />
+        <input
+            id="vowel_field"
+            type="checkbox"
+            name="vowel"
+        >Vowel Weighting</input>
+        <br /><br />
         <button class="btn btn-primary" id="generate">
             Generate new sentence
         </button>
-        <button class="btn btn-info" id='favorite'>
+        <button class="btn btn-info" id="favorite">
             Mark sentence as favorite
         </button>
         <a class="btn btn-dark" href="/favorites">View Favorites</a>

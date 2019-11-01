@@ -1,11 +1,19 @@
 $(document).ready(function() {
     $("#generate").on('click', function() {
-        let val = $('#input_field');
+        let val = $('#num_field');
         let num = val[0].value;
+
+        let checked = $('#vowel_field').is(':checked');
+        let vowel = 'False';
+        // So that it isnt 'true' and instead is True
+        if (checked) {
+            vowel = 'True';
+        }
+        console.log(vowel);
         req = $.ajax({
             url: '/',
             type: 'POST',
-            data: {num: num}
+            data: {num: num, vowel: vowel}
         })
         req.done(function(data) {
             $('#sentence').text(data.sentence);

@@ -174,7 +174,7 @@ def count_histogram(source_file):
     words = get_clean_words(source_file)
 
     histo = histogram(source_file)
-    max_len = len(max(histo.keys(), key=len))
+    max_len = max(histo.values())
     new_histo = []
 
     for i in range(1, max_len + 1):
@@ -182,7 +182,8 @@ def count_histogram(source_file):
         for key in histo.keys():
             if histo.get(key) == i:
                 words.append(key)
-        new_histo.append((i, words))
+        if words:
+            new_histo.append((i, words))
 
     return new_histo
 
@@ -232,3 +233,7 @@ def frequency(word, histogram):
             if entry[0] == word:
                 return entry[1]
         return 0
+
+if __name__ == "__main__":
+    histo = count_histogram('txt_files/test.txt')
+    print(histo)

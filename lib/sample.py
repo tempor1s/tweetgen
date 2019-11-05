@@ -3,7 +3,6 @@ from random import random, choice, choices, uniform, randint
 from sys import argv
 from bisect import bisect
 
-# TODO: Refactor isinstance
 
 def sample(histogram, amount=1):
     """

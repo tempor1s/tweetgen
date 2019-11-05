@@ -30,8 +30,6 @@ def histogram(source_file, vowels=False):
             for c in word_list:
                 if set('aeiou').intersection(c.lower()):
                     histo[word] = histo.get(word) + 1
-            # if set('aeiou').intersection(word.lower()):
-            #     histo[word] = histo.get(word) + 1
     return histo
 
 

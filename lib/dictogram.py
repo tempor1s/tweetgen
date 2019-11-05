@@ -8,6 +8,7 @@ from itertools import accumulate
 class Dictogram(dict):
     """Dictogram is a histogram implemented as a subclass of the dict type"""
 
+    # TODO: Implement vowels
     def __init__(self, word_list=None):
         """
         Initialize this histogram as a new dict and count given words
@@ -16,15 +17,18 @@ class Dictogram(dict):
             word_list: list - A list of words you want to convert into a histogram
         """
         super().__init__()  # Initialize this as a new dict
-        if word_list:
-            for word in word_list:
-                self[word] = self.get(word, 0) + 1
-            # Create a histogram from the path
+
+        # This is slower than my previous implementation that would check values and tokens at the end instead of each time, but its much more clean
         # Add properties to track useful word counts for this histogram
         # Count of distinct word types in this histogram
-        self.types = len(self)
+        self.types = 0
         # Total count of all word tokens in this histogram
-        self.tokens = sum(self.values())
+        self.tokens = 0 
+
+        if word_list:
+            for word in word_list:
+                self.add_count(word, 1)
+
 
     def add_count(self, word, count=1):
         """
@@ -117,7 +121,8 @@ class Dictogram(dict):
         Returns:
             list: list of k random words
         """
-        return [choice(list(histogram.keys())) for _ in range(k)]
+        # Return k amount of random items from self - not weighted
+        return [choice(list(self.keys())) for _ in range(k)]
 
     def weighted_sample(self, amount=1):
         """
@@ -130,6 +135,7 @@ class Dictogram(dict):
             list: list of k random words
         """
         # TODO: Think I can refactor this a bit more
+        # Pass dictogram keys, values, and amount into choose function to k large list of weighted samples
         return self._choose(population=list(self.keys()), weights=list(self.values()), k=amount)
 
     def _choose(self, population, weights, k):
@@ -144,9 +150,12 @@ class Dictogram(dict):
         Returns:
             list: A List of k random weighted words 
         """
+        # Get all the weights
         cum_weights = list(accumulate(weights))
+        # Get the total, which will be the last item in weights
         total = cum_weights[-1]
 
+        # Return k amount of weighted items
         return [population[bisect(cum_weights, random() * total)] for i in range(k)]
 
     def get_sentence(self, amount=10):
@@ -160,8 +169,8 @@ class Dictogram(dict):
         Returns:
             sentence: str - The sentence as a string
         """
+        # Get x amount of weighted words from dictogram and then return them in 'sentence' structure
         weighted_words = self.weighted_sample(amount)
-
         return ' '.join(weighted_words).capitalize() + '.'
 
 

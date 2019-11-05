@@ -9,7 +9,7 @@ class Dictogram(dict):
     """Dictogram is a histogram implemented as a subclass of the dict type"""
 
     # TODO: Implement vowels
-    def __init__(self, word_list=None):
+    def __init__(self, word_list=None, vowels=False):
         """
         Initialize this histogram as a new dict and count given words
 
@@ -28,6 +28,13 @@ class Dictogram(dict):
         if word_list:
             for word in word_list:
                 self.add_count(word, 1)
+        # Weighting based off of values
+        if word_list and vowels:
+            for word in self.keys():
+                word_list = list(word)
+                for c in word_list:
+                    if set('aeiou').intersection(c.lower()):
+                        self.add_count(word, 1)
 
 
     def add_count(self, word, count=1):
@@ -176,9 +183,8 @@ class Dictogram(dict):
 
 if __name__ == "__main__":
     fish_text = 'one fish two fish red fish blue fish'
-    histo = Dictogram(fish_text.split(' '))
-    sample = histo.get_sentence(10)
-    print(sample)
+    histo = Dictogram(fish_text.split(' '), True)
+    print(histo)
 
 # def print_histogram(word_list):
 #     print('word list: {}'.format(word_list))

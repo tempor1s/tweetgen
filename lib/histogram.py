@@ -2,6 +2,7 @@ from operator import itemgetter
 from random import choice
 from lib.utils import get_clean_words
 import os
+from random import random, choice, choices, uniform, randint
 
 
 def histogram(source_file, vowels=False):

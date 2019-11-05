@@ -1,5 +1,7 @@
 from operator import itemgetter
+from bisect import bisect
 import os
+from random import random, choice, choices, uniform, randint
 
 
 class Dictogram(dict):
@@ -103,6 +105,18 @@ class Dictogram(dict):
                 # Split it into word, number pair and set it to an item in self
                 word, num = item.split()
                 self.add_count(word, int(num))
+    
+    def sample(self, k=1):
+        """
+        Returns a random word from Dictogram
+
+        Params:
+            k: int - The amount of random words you want from the dictogram
+
+        Returns:
+            list: list of k random words
+        """
+        return [choice(list(histogram.keys())) for _ in range(k)]
 
 
 if __name__ == "__main__":

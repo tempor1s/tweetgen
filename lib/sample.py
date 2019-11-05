@@ -46,6 +46,7 @@ def weighted_sample(histogram, amount=1):
         # return choose(population=[val[0] for val in histogram], weights=[val[1] for val in histogram], k=amount)
 
 
+# TODO: Add this to dictogram
 def simple_weighted(histogram):
     """
     Simple way to get a weighted value

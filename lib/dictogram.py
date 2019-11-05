@@ -2,6 +2,7 @@ from operator import itemgetter
 from bisect import bisect
 import os
 from random import random, choice, choices, uniform, randint
+from itertools import accumulate
 
 
 class Dictogram(dict):
@@ -41,10 +42,10 @@ class Dictogram(dict):
     def frequency(self, word):
         """
         Return frequency count of given word, or 0 if word is not found.
-        
+
         Params:
             word: str - The word you want to get the frequency of
-        
+
         Returns:
             int - Frequency of word, 0 if not found
         """
@@ -89,7 +90,7 @@ class Dictogram(dict):
             for key in self.keys():
                 # Write each line to file with word and ammount of times it appears with a newline after it
                 f.write(f'{key} {str(self.get(key))}\n')
-    
+
     def read_from_log(self, filename='log.txt'):
         """
         Get entries from a histogram log file and put them into self (dictogram)
@@ -105,7 +106,7 @@ class Dictogram(dict):
                 # Split it into word, number pair and set it to an item in self
                 word, num = item.split()
                 self.add_count(word, int(num))
-    
+
     def sample(self, k=1):
         """
         Returns a random word from Dictogram
@@ -118,14 +119,41 @@ class Dictogram(dict):
         """
         return [choice(list(histogram.keys())) for _ in range(k)]
 
+    def weighted_sample(self, amount=1):
+        """
+        Return a random word from self (Dictogram) that is weighted
+
+        Params:
+            amount: int - The amount of weighted random words that you want
+
+        Returns:
+            list: list of k random words
+        """
+        return self._choose(population=list(self.keys()), weights=list(self.values()), k=amount)
+
+    def _choose(self, population, weights, k):
+        """
+        Return k amount of weighted random values.
+
+        Params:
+            population: list, tuple - A list of values you want to get the weighted sample from
+            weights: list (ints) - A list of all the values that you want to use as weights
+            k: int - The amount random weighted words you you want to be returned
+
+        Returns:
+            list: A List of k random weighted words 
+        """
+        cum_weights = list(accumulate(weights))
+        total = cum_weights[-1]
+
+        return [population[bisect(cum_weights, random() * total)] for i in range(k)]
+
 
 if __name__ == "__main__":
     fish_text = 'one fish two fish red fish blue fish'
     histo = Dictogram(fish_text.split(' '))
-    print(histo)
-    histo.log()
-    histo.read_from_log()
-    print(histo)
+    sample = histo.weighted_sample(10)
+    print(sample)
 
 # def print_histogram(word_list):
 #     print('word list: {}'.format(word_list))

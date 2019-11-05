@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, jsonify, redirect, url_for
-from lib.sample import get_sentence
-from lib.histogram import histogram
+from lib.dictogram import Dictogram
+from lib.utils import get_clean_words
 from pymongo import MongoClient
 import os
 
@@ -20,8 +20,10 @@ def index():
     #TODO: Implement vowel weighting check in ajax request and html
     vowel_weight = request.form.get('vowel', False)
 
-    histo = histogram(path, vowel_weight)
-    sentence = get_sentence(histo, int(num))
+    # Get all words from corpus to be passed into Dictogram
+    words = get_clean_words(path)
+    histo = Dictogram(words, vowel_weight)
+    sentence = histo.get_sentence(int(num))
 
     if request.method == 'POST':
         return jsonify({'sentence': sentence})

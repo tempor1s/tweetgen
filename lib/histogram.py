@@ -1,6 +1,6 @@
 from operator import itemgetter
 from random import choice
-from utils import get_clean_words
+from lib.utils import get_clean_words
 import os
 
 

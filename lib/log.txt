@@ -1,5 +1,0 @@
-one 1
-fish 10
-two 1
-red 1
-blue 1

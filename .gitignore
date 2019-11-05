@@ -4,3 +4,4 @@ __pycache__
 .vscode
 .pyc
 .pytest_cache
+log.txt

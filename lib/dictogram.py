@@ -129,6 +129,7 @@ class Dictogram(dict):
         Returns:
             list: list of k random words
         """
+        # TODO: Think I can refactor this a bit more
         return self._choose(population=list(self.keys()), weights=list(self.values()), k=amount)
 
     def _choose(self, population, weights, k):
@@ -148,11 +149,26 @@ class Dictogram(dict):
 
         return [population[bisect(cum_weights, random() * total)] for i in range(k)]
 
+    def get_sentence(self, amount=10):
+        """
+        Get a 'sentence' which is basically a list of random words with the first letter capitalized and a period added onto the end
+
+        Params:
+            histo: The histogram you want to get your sentence from
+            amount: int - The length you want your 'sentence' to be
+
+        Returns:
+            sentence: str - The sentence as a string
+        """
+        weighted_words = self.weighted_sample(amount)
+
+        return ' '.join(weighted_words).capitalize() + '.'
+
 
 if __name__ == "__main__":
     fish_text = 'one fish two fish red fish blue fish'
     histo = Dictogram(fish_text.split(' '))
-    sample = histo.weighted_sample(10)
+    sample = histo.get_sentence(10)
     print(sample)
 
 # def print_histogram(word_list):

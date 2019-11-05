@@ -1,0 +1,5 @@
+one 1
+fish 4
+two 1
+red 1
+blue 1

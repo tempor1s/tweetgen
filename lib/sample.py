@@ -50,7 +50,7 @@ def simple_weighted(histogram):
     """
     Simple way to get a weighted value
 
-    Arguments:
+    Params:
         histogram: The histogram that you want to get weighted histograms from
     
     Returns:
@@ -70,7 +70,7 @@ def choose(population, weights, k=1):
     """
     Return k amount of weighted random values.
 
-    Arguments:
+    Params:
         population: list, tuple - A list of values you want to get the weighted sample from
         weights: list (ints) - A list of all the values that you want to use as weights
         k: int - The amount random weighted words you you want to be returned
@@ -88,7 +88,7 @@ def get_weighted(iterable):
     """
     Similar to python itertool but stripped down to be specific for use in getting weights
 
-    Arguments:
+    Params:
         iterable: list, tuple - What you want to get the weighted values from
 
     Yields:
@@ -112,7 +112,7 @@ def get_sentence(histo, amount=10):
     """
     Get a 'sentence' which is basically a list of random words with the first letter capitalized and a period added onto the end
 
-    Arguments:
+    Params:
         histo: The histogram you want to get your sentence from
         amount: int - The length you want your 'sentence' to be
 

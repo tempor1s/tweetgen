@@ -19,7 +19,6 @@ def index():
     num = request.form.get('num', 10)
     #TODO: Implement vowel weighting check in ajax request and html
     vowel_weight = request.form.get('vowel', False)
-    print(vowel_weight)
 
     histo = histogram(path, vowel_weight)
     sentence = get_sentence(histo, int(num))

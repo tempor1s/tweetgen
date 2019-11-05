@@ -1,3 +1,6 @@
+from operator import itemgetter
+
+
 class Dictogram(dict):
     """Dictogram is a histogram implemented as a subclass of the dict type."""
 
@@ -9,18 +12,27 @@ class Dictogram(dict):
                 self[word] = self.get(word, 0) + 1
             # Create a histogram from the path
         # Add properties to track useful word counts for this histogram
-        self.types = len(self)  # Count of distinct word types in this histogram
-        self.tokens = sum(self.values())  # Total count of all word tokens in this histogram
+        # Count of distinct word types in this histogram
+        self.types = len(self)
+        # Total count of all word tokens in this histogram
+        self.tokens = sum(self.values())
 
     def add_count(self, word, count=1):
         """Increase frequency count of given word by given count amount."""
         self[word] = self.get(word, 0) + count
-        self.tokens += count # Increment the tokens amount so that we do not need to do any recalculations
-        self.types = len(self) # TODO: Make this faster
+        # Increment the tokens amount so that we do not need to do any recalculations
+        self.tokens += count
+        self.types = len(self)  # TODO: Make this faster
 
     def frequency(self, word):
         """Return frequency count of given word, or 0 if word is not found."""
         return self.get(word, 0)
+
+    def get_sorted(self):
+        listed_histo = []
+        for key in self.keys():
+            listed_histo.append([key, self.get(key)])
+        return sorted(listed_histo, key=itemgetter(1), reverse=True)
 
 
 def print_histogram(word_list):

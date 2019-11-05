@@ -23,17 +23,6 @@ def sample(histogram, amount=1):
         return choice(histogram)[0]
 
 
-def simple_weighted(histogram):
-    rand_val = randint(1, len(histogram.keys()))
-    total = 0
-
-    for k, v in histogram.items():
-        total += v
-        if rand_val <= total:
-            return k
-    assert False, 'unreachable'
-
-
 def weighted_sample(histogram, amount=1):
     """
     Return a random word from a histogram that is weighted
@@ -57,7 +46,38 @@ def weighted_sample(histogram, amount=1):
         # return choose(population=[val[0] for val in histogram], weights=[val[1] for val in histogram], k=amount)
 
 
+def simple_weighted(histogram):
+    """
+    Simple way to get a weighted value
+
+    Arguments:
+        histogram: The histogram that you want to get weighted histograms from
+    
+    Returns:
+        str: random word
+    """
+    rand_val = randint(1, len(histogram.keys()))
+    total = 0
+
+    for k, v in histogram.items():
+        total += v
+        if rand_val <= total:
+            return k
+    assert False, 'unreachable'
+
+
 def choose(population, weights, k=1):
+    """
+    Return k amount of weighted random values.
+
+    Arguments:
+        population: list, tuple - A list of values you want to get the weighted sample from
+        weights: list (ints) - A list of all the values that you want to use as weights
+        k: int - The amount random weighted words you you want to be returned
+
+    Returns:
+        list: A List of k random weighted words 
+    """
     cum_weights = list(get_weighted(weights))
     total = cum_weights[-1]
 
@@ -66,7 +86,7 @@ def choose(population, weights, k=1):
 
 def get_weighted(iterable):
     """
-    Similar to python intertool but stripped down to be specific for use in getting weights
+    Similar to python itertool but stripped down to be specific for use in getting weights
 
     Arguments:
         iterable: list, tuple - What you want to get the weighted values from
@@ -89,6 +109,16 @@ def get_weighted(iterable):
 
 
 def get_sentence(histo, amount=10):
+    """
+    Get a 'sentence' which is basically a list of random words with the first letter capitalized and a period added onto the end
+
+    Arguments:
+        histo: The histogram you want to get your sentence from
+        amount: int - The length you want your 'sentence' to be
+
+    Returns:
+        sentence: str - The sentence as a string
+    """
     weighted_words = weighted_sample(histo, amount)
 
     return ' '.join(weighted_words).capitalize() + '.'

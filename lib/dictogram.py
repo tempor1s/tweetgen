@@ -90,27 +90,26 @@ class Dictogram(dict):
     
     def read_from_log(self, filename='log.txt'):
         """
-        Get entries from a histogram log file and put them into a dictonary
+        Get entries from a histogram log file and put them into self (dictogram)
 
         Params:
             filename: file - name of file that you want to read from
-
-        Returns:
-            dict: New histogram as a dictonary
         """
         with open(filename, 'r') as f:
-            # Remove any whitespace at beginning and end of file
+            # Remove any whitespace at beginning and end of file and split words into list
             words = f.read().strip().split('\n')
+            # Loop through every item that was read from the file
             for item in words:
+                # Split it into word, number pair and set it to an item in self
                 word, num = item.split()
-                self[word] = int(num)
-            return histo
+                self.add_count(word, int(num))
 
 
 if __name__ == "__main__":
     fish_text = 'one fish two fish red fish blue fish'
     histo = Dictogram(fish_text.split(' '))
     print(histo)
+    histo.log()
     histo.read_from_log()
     print(histo)
 

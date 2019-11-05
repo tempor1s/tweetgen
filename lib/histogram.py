@@ -31,20 +31,26 @@ def histogram(source_file, vowels=False):
 
     Params:
         source_file: .txt file that contains text you want to get a histrogram of
+        vowels: bool - If we should do weighting based off of the amount of times a vowel appears
 
     Returns:
         words: dict - key of unique word and value of amount of times that word appears
     """
-    # Dictonary Implementation - Esentially fastest implementation
+    # Dictonary Implementation - Essentially fastest implementation
     words = get_clean_words(source_file)
     histo = {}
     for word in words:
         histo[word] = histo.get(word, 0) + 1
 
+    # Does weighting based off of how many vowels are in a word
     if vowels:
         for word in histo.keys():
-            if set('aeiou').intersection(word.lower()):
-                histo[word] = histo.get(word) + 1
+            word_list = list(word)
+            for c in word_list:
+                if set('aeiou').intersection(c.lower()):
+                    histo[word] = histo.get(word) + 1
+            # if set('aeiou').intersection(word.lower()):
+            #     histo[word] = histo.get(word) + 1
     return histo
 
 
@@ -63,7 +69,7 @@ def sort_histogram(histogram):
         for key in histogram.keys():
             listed_histo.append([key, histogram.get(key)])
         return sorted(listed_histo, key=itemgetter(1), reverse=True)
-    elif isinstance(histogram, list) or isinstance(histogram, tuple):
+    elif isinstance(histogram, (list, tuple)):
         return sorted(histogram, key=itemgetter(1), reverse=True)
     else:
         return None
@@ -171,8 +177,6 @@ def count_histogram(source_file):
     Returns:
         list: A list of lists that contain the amount of times that a word appears
     """
-    words = get_clean_words(source_file)
-
     histo = histogram(source_file)
     max_len = max(histo.values())
     new_histo = []
@@ -199,20 +203,21 @@ def unique_words(histogram):
     Returns:
         int: The amount of unique words in a histogram
     """
-    if isinstance(histogram, dict):
-        count = 0
-        for word in histogram.keys():
-            if histogram.get(word) == 1:
-                count += 1
+    # if isinstance(histogram, dict):
+    #     count = 0
+    #     for word in histogram.keys():
+    #         if histogram.get(word) == 1:
+    #             count += 1
 
-        return count
-    elif isinstance(histogram, list) or isinstance(histogram, tuple):
-        count = 0
-        for word in histogram:
-            if isinstance(word[1], int) and word[1] == 1:
-                count += 1
+    #     return count
+    # elif isinstance(histogram, (list, tuple)):
+    #     count = 0
+    #     for word in histogram:
+    #         if isinstance(word[1], int) and word[1] == 1:
+    #             count += 1
 
-        return count
+    #     return count
+    return len(histogram)
 
 
 def frequency(word, histogram):
@@ -228,12 +233,8 @@ def frequency(word, histogram):
     word = word.lower()
     if isinstance(histogram, dict):
         return histogram.get(word, 0)
-    elif isinstance(histogram, list) or isinstance(histogram, tuple):
+    elif isinstance(histogram, (list, tuple)):
         for entry in histogram:
             if entry[0] == word:
                 return entry[1]
         return 0
-
-if __name__ == "__main__":
-    histo = count_histogram('txt_files/test.txt')
-    print(histo)

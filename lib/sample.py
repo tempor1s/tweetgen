@@ -3,6 +3,7 @@ from random import random, choice, choices, uniform, randint
 from sys import argv
 from bisect import bisect
 
+# TODO: Refactor isinstance
 
 def sample(histogram, amount=1):
     """
@@ -19,13 +20,14 @@ def sample(histogram, amount=1):
         print(total)
 
         return choice(list(histogram.keys()))
-    elif isinstance(histogram, list) or isinstance(histogram, tuple):
+    elif isinstance(histogram, (list, tuple)):
         return choice(histogram)[0]
 
 
 def simple_weighted(histogram):
     rand_val = randint(1, len(histogram.keys()))
     total = 0
+
     for k, v in histogram.items():
         total += v
         if rand_val <= total:
@@ -48,7 +50,7 @@ def weighted_sample(histogram, amount=1):
         return choose(population=list(histogram.keys()), weights=list(histogram.values()), k=amount)
 
     # Check if it is tuple or list
-    elif isinstance(histogram, list) or isinstance(histogram, tuple):
+    elif isinstance(histogram, (list, tuple)):
         population = [val[0] for val in histogram]
         weights = [val[1] for val in histogram]
 

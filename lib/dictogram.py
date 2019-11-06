@@ -161,7 +161,7 @@ class Dictogram(dict):
             sentence: str - The sentence as a string
         """
         # Get x amount of weighted words from dictogram and then return them in 'sentence' structure
-        weighted_words = self.weighted_sample(amount)
+        weighted_words = self.sample(amount)
         return ' '.join(weighted_words).capitalize() + '.'
 
 

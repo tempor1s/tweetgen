@@ -12,17 +12,21 @@ client = MongoClient(host=f'{host}?retryWrites=false')
 db = client.get_default_database()
 favorites = db.favorites
 
+path = 'lib/txt_files/aesop.txt'
+words = get_clean_words(path)
+histo = Dictogram(words, False)
+
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
-    path = 'lib/txt_files/test.txt'
+    path = 'lib/txt_files/aesop.txt'
     num = request.form.get('num', 10)
     #TODO: Implement vowel weighting check in ajax request and html
     vowel_weight = request.form.get('vowel', False)
 
     # Get all words from corpus to be passed into Dictogram
-    words = get_clean_words(path)
-    histo = Dictogram(words, vowel_weight)
+    # words = get_clean_words(path)
+    # histo = Dictogram(words, vowel_weight)
     sentence = histo.get_sentence(int(num))
 
     if request.method == 'POST':

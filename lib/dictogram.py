@@ -7,8 +7,6 @@ from itertools import accumulate
 
 class Dictogram(dict):
     """Dictogram is a histogram implemented as a subclass of the dict type"""
-
-    # TODO: Implement vowels
     def __init__(self, word_list=None, vowels=False):
         """
         Initialize this histogram as a new dict and count given words
@@ -27,6 +25,7 @@ class Dictogram(dict):
             for word in word_list:
                 self.add_count(word, 1)
         # Weighting based off of values
+        # TODO: Change how this works
         if word_list and vowels:
             for word in self.keys():
                 word_list = list(word)

@@ -37,6 +37,9 @@ class MarkovChain(dict):
 
         Params:
             word: str - The word you want to sample from
+        
+        Returns:
+            list: one random sampled word
         """
         histo = self.get(word, None)
 
@@ -46,6 +49,15 @@ class MarkovChain(dict):
             raise Exception('Invalid word')
     
     def walk(self, count=10):
+        """
+        Walk through the markov states to get x amount of non-random words
+
+        Params:
+            count: int - The amount of times that you want it to walk
+
+        Returns:
+            list: x amount of random words
+        """
         # Get a random starting word from the self keys
         next_word = choice(list(self.keys()))
         # Start a list with the 'starting' word as the first entry
@@ -58,11 +70,26 @@ class MarkovChain(dict):
             words.append(next_word)
         # Return the list of words
         return words
+    
+    def create_sentence(self, count=10):
+        """
+        Create a sentence that is 'count' amount of words long
+
+        Params:
+            count: int - the length of the sentence
+        
+        Returns:
+            str: the sentence that you requested
+        """
+        # Get count amount of words through markov walk
+        words = self.walk(count)
+        # Return a 'sentence' with a capital letter and a period at the end!
+        return ' '.join(words).capitalize() + '.'
 
 
 
 if __name__ == "__main__":
     words = get_clean_words('txt_files/sherlock.txt')
     chain = MarkovChain(words)
-    walk = chain.walk(20)
+    walk = chain.create_sentence(20)
     print(walk)

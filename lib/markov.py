@@ -1,23 +1,23 @@
-from dictogram import Dictogram
-from utils import get_clean_words
+from lib.dictogram import Dictogram
+from lib.utils import get_clean_words
 from random import choice
 
 
 class MarkovChain(dict):
     def __init__(self, word_list):
-        super().__init__() # Initialize this as a new dict
+        super().__init__()  # Initialize this as a new dict
 
         # Check to make sure a word list is passed in
         if word_list:
             for i in range(0, len(word_list)):
                 # The current word in the iteration
                 word = word_list[i]
-                
+
                 try:
                     # The word 1 index ahead of the current word, aka the next word in the sentence
                     # has to be in try except because of index out of range exception on end of list
                     next_word = word_list[i + 1]
-                # If index error then no new words in list to add so break out    
+                # If index error then no new words in list to add so break out
                 except IndexError:
                     break
 
@@ -37,7 +37,7 @@ class MarkovChain(dict):
 
         Params:
             word: str - The word you want to sample from
-        
+
         Returns:
             list: one random sampled word
         """
@@ -47,7 +47,7 @@ class MarkovChain(dict):
             return histo.sample(1)
         else:
             raise Exception('Invalid word')
-    
+
     def walk(self, count=10):
         """
         Walk through the markov states to get x amount of non-random words
@@ -70,14 +70,14 @@ class MarkovChain(dict):
             words.append(next_word)
         # Return the list of words
         return words
-    
+
     def create_sentence(self, count=10):
         """
         Create a sentence that is 'count' amount of words long
 
         Params:
             count: int - the length of the sentence
-        
+
         Returns:
             str: the sentence that you requested
         """
@@ -85,11 +85,3 @@ class MarkovChain(dict):
         words = self.walk(count)
         # Return a 'sentence' with a capital letter and a period at the end!
         return ' '.join(words).capitalize() + '.'
-
-
-
-if __name__ == "__main__":
-    words = get_clean_words('txt_files/sherlock.txt')
-    chain = MarkovChain(words)
-    walk = chain.create_sentence(20)
-    print(walk)

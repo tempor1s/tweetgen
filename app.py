@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, jsonify, redirect, url_for
 from lib.dictogram import Dictogram
+from lib.markov import MarkovChain
 from lib.utils import get_clean_words
 from pymongo import MongoClient
 import os
@@ -12,23 +13,22 @@ client = MongoClient(host=f'{host}?retryWrites=false')
 db = client.get_default_database()
 favorites = db.favorites
 
-path = 'lib/txt_files/aesop.txt'
+# Setup markov chain when the text is first created so it doesn't need to generated on every get request
+path = 'lib/txt_files/sherlock.txt'
 words = get_clean_words(path)
-histo = Dictogram(words, False)
+markov = MarkovChain(words)
 
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
-    path = 'lib/txt_files/aesop.txt'
-    num = request.form.get('num', 10)
-    #TODO: Implement vowel weighting check in ajax request and html
+    num = request.form.get('num', 20)
+    # TODO: Implement vowel weighting check in ajax request and html
     vowel_weight = request.form.get('vowel', False)
 
-    # Get all words from corpus to be passed into Dictogram
-    # words = get_clean_words(path)
-    # histo = Dictogram(words, vowel_weight)
-    sentence = histo.get_sentence(int(num))
+    # Generate a new sentence that is num length long
+    sentence = markov.create_sentence(int(num))
 
+    # for jquery
     if request.method == 'POST':
         return jsonify({'sentence': sentence})
 

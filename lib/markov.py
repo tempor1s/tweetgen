@@ -1,5 +1,6 @@
 from dictogram import Dictogram
 from utils import get_clean_words
+from random import choice
 
 
 class MarkovChain(dict):
@@ -37,11 +38,31 @@ class MarkovChain(dict):
         Params:
             word: str - The word you want to sample from
         """
-        pass
+        histo = self.get(word, None)
+
+        if histo:
+            return histo.sample(1)
+        else:
+            raise Exception('Invalid word')
+    
+    def walk(self, count=10):
+        # Get a random starting word from the self keys
+        next_word = choice(list(self.keys()))
+        # Start a list with the 'starting' word as the first entry
+        words = [next_word]
+        # Loop count - 1 times through the list to 'walk' through states
+        for _ in range(0, count - 1):
+            # Sample the next word and then get it as a string as sample returns a list
+            next_word = self.sample(next_word)[0]
+            # Append that word to the 'words' list and then move on to next iteration with new state
+            words.append(next_word)
+        # Return the list of words
+        return words
+
 
 
 if __name__ == "__main__":
-    words = get_clean_words('txt_files/example.txt')
-    print(words)
+    words = get_clean_words('txt_files/sherlock.txt')
     chain = MarkovChain(words)
-    print(chain)
+    walk = chain.walk(20)
+    print(walk)

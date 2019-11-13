@@ -41,9 +41,10 @@ class LinkedList(object):
         TODO: Running time: O(???) Why and under what conditions?"""
         # Create a new node to either be set as head or as last node
         node = Node(item)
-        # If head is none, set node to head and break
+        # If head is none, set node to head and tail and then return
         if self.head is None:
             self.head = node
+            self.tail = node
             return
         
         # else traverse till the last node
@@ -51,12 +52,18 @@ class LinkedList(object):
         while previous.next:
             previous = previous.next
 
-        # Once we get to the last node, the next node to be node we just created
+        # Once we get to the last node, set the previous node to have a next of the node we just created, and then update the tail
         previous.next = node
+        self.tail = node
     
     def prepend(self, item):
         """Insert the given item at the head of this linked list.
         TODO: Running time: O(???) Why and under what conditions?"""
+        # Create a new node object
+        node = Node(item)
+
+        node.next = self.head
+
         # TODO: Create new node to hold given item
         # TODO: Prepend node before head, if it exists
 
@@ -91,7 +98,7 @@ class LinkedList(object):
         if node is None:
             return 0
         else:
-            return 1 + self.count(node.next)
+            return 1 + self._count(node.next)
 
 
     def find(self, quality):

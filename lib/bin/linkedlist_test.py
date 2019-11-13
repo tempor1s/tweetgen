@@ -115,6 +115,7 @@ class LinkedListTest(unittest.TestCase):
         ll = LinkedList()
         # Append should always update tail node
         ll.append('A')
+        print(ll.tail)
         assert ll.head.data == 'A'  # New head
         assert ll.tail.data == 'A'  # New tail
         ll.append('B')

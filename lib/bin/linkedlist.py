@@ -47,14 +47,9 @@ class LinkedList(object):
             self.tail = node
             return
         
-        # else traverse till the last node
-        previous = self.head
-        while previous.next:
-            previous = previous.next
-
-        # Once we get to the last node, set the previous node to have a next of the node we just created, and then update the tail
-        previous.next = node
+        self.tail.next = node
         self.tail = node
+
     
     def prepend(self, item):
         """Insert the given item at the head of this linked list.
@@ -116,7 +111,7 @@ class LinkedList(object):
         
         node = self.head
         
-        while node is not None:
+        while node:
             if quality(node.data) == True:
                 return node.data
             else:

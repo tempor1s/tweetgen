@@ -33,6 +33,21 @@ class LinkedList(object):
         """Return a string representation of this linked list."""
         return 'LinkedList({!r})'.format(self.items())
 
+    def __iter__(self):
+        return LinkedListIterator(self.head)
+    
+    def append(self, item):
+        """Insert the given item at the tail of this linked list.
+        TODO: Running time: O(???) Why and under what conditions?"""
+        # TODO: Create new node to hold given item
+        # TODO: Append node after tail, if it exists
+    
+    def prepend(self, item):
+        """Insert the given item at the head of this linked list.
+        TODO: Running time: O(???) Why and under what conditions?"""
+        # TODO: Create new node to hold given item
+        # TODO: Prepend node before head, if it exists
+
     def items(self):
         """Return a list (dynamic array) of all items in this linked list.
         Best and worst case running time: O(n) for n items in the list (length)
@@ -57,18 +72,6 @@ class LinkedList(object):
         TODO: Running time: O(???) Why and under what conditions?"""
         # TODO: Loop through all nodes and count one for each
 
-    def append(self, item):
-        """Insert the given item at the tail of this linked list.
-        TODO: Running time: O(???) Why and under what conditions?"""
-        # TODO: Create new node to hold given item
-        # TODO: Append node after tail, if it exists
-
-    def prepend(self, item):
-        """Insert the given item at the head of this linked list.
-        TODO: Running time: O(???) Why and under what conditions?"""
-        # TODO: Create new node to hold given item
-        # TODO: Prepend node before head, if it exists
-
     def find(self, quality):
         """Return an item from this linked list satisfying the given quality.
         TODO: Best case running time: O(???) Why and under what conditions?
@@ -84,6 +87,22 @@ class LinkedList(object):
         # TODO: Update previous node to skip around node with matching data
         # TODO: Otherwise raise error to tell user that delete has failed
         # Hint: raise ValueError('Item not found: {}'.format(item))
+
+# https://stackoverflow.com/questions/50032481/linked-list-iterator-python
+class LinkedListIterator:
+    def __init__(self, head):
+        self.current = head
+
+    def __iter__(self):
+        return self
+
+    def __next__(self):
+        if not self.current:
+            raise StopIteration
+        else:
+            item = self.current.get_data()
+            self.current = self.current.get_next()
+            return item
 
 
 def test_linked_list():

@@ -39,8 +39,20 @@ class LinkedList(object):
     def append(self, item):
         """Insert the given item at the tail of this linked list.
         TODO: Running time: O(???) Why and under what conditions?"""
-        # TODO: Create new node to hold given item
-        # TODO: Append node after tail, if it exists
+        # Create a new node to either be set as head or as last node
+        node = Node(item)
+        # If head is none, set node to head and break
+        if self.head is None:
+            self.head = node
+            return
+        
+        # else traverse till the last node
+        previous = self.head
+        while previous.next:
+            previous = previous.next
+
+        # Once we get to the last node, the next node to be node we just created
+        previous.next = node
     
     def prepend(self, item):
         """Insert the given item at the head of this linked list.
@@ -71,6 +83,16 @@ class LinkedList(object):
         """Return the length of this linked list by traversing its nodes.
         TODO: Running time: O(???) Why and under what conditions?"""
         # TODO: Loop through all nodes and count one for each
+        # If there are no items in the linked list return a length of 0
+        return self._count(self.head)
+    
+    def _count(self, node):
+        """Return the length of a linked list by traversing its nodes recursively."""
+        if node is None:
+            return 0
+        else:
+            return 1 + self.count(node.next)
+
 
     def find(self, quality):
         """Return an item from this linked list satisfying the given quality.
@@ -87,22 +109,6 @@ class LinkedList(object):
         # TODO: Update previous node to skip around node with matching data
         # TODO: Otherwise raise error to tell user that delete has failed
         # Hint: raise ValueError('Item not found: {}'.format(item))
-
-# https://stackoverflow.com/questions/50032481/linked-list-iterator-python
-class LinkedListIterator:
-    def __init__(self, head):
-        self.current = head
-
-    def __iter__(self):
-        return self
-
-    def __next__(self):
-        if not self.current:
-            raise StopIteration
-        else:
-            item = self.current.get_data()
-            self.current = self.current.get_next()
-            return item
 
 
 def test_linked_list():

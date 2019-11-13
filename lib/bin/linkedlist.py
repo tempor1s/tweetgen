@@ -62,10 +62,18 @@ class LinkedList(object):
         # Create a new node object
         node = Node(item)
 
-        node.next = self.head
+        # Only enter if head does not exist
+        if not self.head:
+            # Use our append function because head does not exist, and it will handle tail etc
+            self.append(item)
+            return
 
-        # TODO: Create new node to hold given item
-        # TODO: Prepend node before head, if it exists
+        # Set our new nodes next to be our current head
+        node.next = self.head
+        
+        # set the new head to be our new node
+        self.head = node
+
 
     def items(self):
         """Return a list (dynamic array) of all items in this linked list.

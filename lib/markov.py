@@ -4,32 +4,40 @@ from random import choice
 
 
 class MarkovChain(dict):
-    def __init__(self, word_list):
+    """MarkovChain is a markov chain implemented as a dict of histograms"""
+
+    def __init__(self, word_list=None):
+        """
+        Initialize this markov as a new dict and set up inital markov chain
+
+        Params:
+            word_list: list - A list of the words you want to create a markov chain from
+        """
         super().__init__()  # Initialize this as a new dict
-
-        # Check to make sure a word list is passed in
+        # Check to make sure a word list is passed in to do stuff, otherwise do nothing on init
         if word_list:
-            for i in range(0, len(word_list)):
-                # The current word in the iteration
-                word = word_list[i]
+            self._create_chain(word_list)
 
-                try:
-                    # The word 1 index ahead of the current word, aka the next word in the sentence
-                    # has to be in try except because of index out of range exception on end of list
-                    next_word = word_list[i + 1]
-                # If index error then no new words in list to add so break out
-                except IndexError:
-                    break
-
-                # The word dictogram if it exists
-                word_dicto = self.get(word, None)
-
-                if word_dicto is not None:
-                    # Add a new word entry to the dictogram if the dictogram already exists
-                    word_dicto.add_count(next_word, 1)
-                else:
-                    # Create a new dictogram for the word
-                    self[word] = Dictogram([next_word])
+    def _create_chain(self, word_list):
+        for i in range(0, len(word_list)):
+            # The current word in the iteration
+            word = word_list[i]
+            try:
+                # The word 1 index ahead of the current word, aka the next word in the sentence
+                # has to be in try except because of index out of range exception on end of list
+                next_word = word_list[i + 1]
+            # If index error then no new words in list to add so break out
+            except IndexError:
+                break
+            # The word dictogram if it exists
+            word_dicto = self.get(word, None)
+            # If word exists then add a count of 1, otherwise create a new dictogram with the next word
+            if word_dicto:
+                # Add a new word entry to the dictogram if the dictogram already exists
+                word_dicto.add_count(next_word, 1)
+            else:
+                # Create a new dictogram for the word
+                self[word] = Dictogram([next_word])
 
     def sample(self, word):
         """

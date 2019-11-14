@@ -25,7 +25,6 @@ class Dictogram(dict):
             for word in word_list:
                 self.add_count(word, 1)
         # Weighting based off of values
-        # TODO: Change how this works
         if word_list and vowels:
             for word in self.keys():
                 word_list = list(word)
@@ -42,10 +41,16 @@ class Dictogram(dict):
             word: str - The word you want to increase the frequency of
             count: int - The amount you want to increase it by
         """
+        # IF the word is going to be a new word then increase types by 1
+        # TODO: Combine this new with new word so that you do not have to access array twice
+        if self.get(word, 0) == 0:
+            self.types += 1
+
+        # If word does not exist create it with a value of count, otherwise add count to the already exiting value
         self[word] = self.get(word, 0) + count
+
         # Increment the tokens amount so that we do not need to do any recalculations
         self.tokens += count
-        self.types = len(self)  # TODO: Make this faster
 
     def frequency(self, word):
         """

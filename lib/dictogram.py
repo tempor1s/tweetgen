@@ -49,12 +49,12 @@ class Dictogram(dict):
         # If word does not exist create it with a value of count, otherwise add count to the already exiting value
         self[word] = self.get(word, 0) + count
 
-        # Increment the tokens amount so that we do not need to do any recalculations
+        # Increment the tokens amount by count
         self.tokens += count
 
     def frequency(self, word):
         """
-        Return frequency count of given word, or 0 if word is not found.
+        Return frequency count of given word, or 0 if word is not found
 
         Params:
             word: str - The word you want to get the frequency of
@@ -79,7 +79,7 @@ class Dictogram(dict):
         # For every key in self (Dictogram), append a new [word, count] pair to the list
         for key in self.keys():
             listed_histo.append([key, self.get(key)])
-        # Return a sorted list that is sorted based off of the count in each pair.
+        # Return a sorted list that is sorted based off of the count in each pair
         return sorted(listed_histo, key=itemgetter(1), reverse=True)
 
     def log(self, filename='log.txt'):
@@ -91,7 +91,7 @@ class Dictogram(dict):
             filename: str - name of file that you want to log to
                 default: log.txt
         """
-        # Try to remove an old log file if it already exists, otherwise just continue and create new one.
+        # Try to remove an old log file if it already exists, otherwise just continue and create new one
         try:
             os.remove(filename)
         except FileNotFoundError:

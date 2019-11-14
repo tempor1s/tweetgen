@@ -46,7 +46,7 @@ class MarkovChain(dict):
         if histo:
             return histo.sample(1)
         else:
-            raise Exception('Invalid word')
+            raise KeyError('Invalid Word')
 
     def walk(self, count=10):
         """

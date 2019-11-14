@@ -3,31 +3,32 @@ from itertools import accumulate
 from bisect import bisect
 from random import random, choice, choices, uniform, randint
 
+
 class Listogram(list):
     """Listogram is a histogram implemented as a subclass of the list type."""
 
     def __init__(self, word_list=None):
         """Initialize this histogram as a new list and count given words."""
         super().__init__()  # Initialize this as a new list
-        # Count words in given list, if any
-        if word_list is not None:
-            self.setup(word_list)
         # Add properties to track useful word counts for this histogram
-        self.types = len(self)  # Count of distinct word types in this histogram
-        self.tokens = sum([n[1] for n in self])  # Total count of all word tokens in this histogram
+        self.types = 0  # Count of distinct word types in this histogram
+        self.tokens = 0  # Total count of all word tokens in this histogram
+        # Count words in given list, if any
+        if word_list:
+            for word in word_list:
+                self.add_count(word)
 
     def add_count(self, word, count=1):
         """Increase frequency count of given word by given count amount."""
-        for item in self:
+        # Increment tokens (total amount of words) by count
+        self.tokens += count
+        for i, item in enumerate(self):
             if item[0] == word:
-                item[1] += count
-                self.tokens += count
+                self[i] = (word, item[1] + count)
                 break
         else:
-            # Append the new word with count if it does not exist, and update tokens and types
-            self.append([word, count])
-            self.tokens += count
-            self.types = len(self)
+            self.append((word, count))
+            self.types += 1
 
 
     def frequency(self, word):
@@ -52,20 +53,10 @@ class Listogram(list):
         for item in self:
             if item[0] == target:
                 return self.index(item)
-
-    def setup(self, word_list):
-        for word in word_list:
-            histo_entry = [word, 0]
-            for word2 in word_list:
-                if word == word2:
-                    histo_entry[1] += 1
-            # TODO: Remove this once I implement __contains__
-            if histo_entry not in list(self):
-                self.append(histo_entry)
     
     def get_sorted(self):
         return sorted(self, key=itemgetter(1), reverse=True)
-    
+
     def sample(self, amount=1):
         """
         Return a random word from self (Dictogram) that is weighted

@@ -24,12 +24,18 @@ class Dictogram(dict):
         if word_list:
             for word in word_list:
                 self.add_count(word, 1)
-        # Weighting based off of values
+        # Weighting based off of how many vowels are in a word - only checks on init so if wanted to fully implement
+        # this I would need to update all functions to support it, but it is a working proof of concept
         if word_list and vowels:
+            # loop through key in the dictogram
             for word in self.keys():
-                word_list = list(word)
-                for c in word_list:
-                    if set('aeiou').intersection(c.lower()):
+                # Convert the word into a list
+                word_as_list = list(word)
+                # Loop through every character in that list
+                for character in word_as_list:
+                    # Check to see if aeoiu is the character
+                    if set('aeiou').intersection(character.lower()):
+                        # Add a frequency count of 1 to that dictogram entry
                         self.add_count(word, 1)
 
 

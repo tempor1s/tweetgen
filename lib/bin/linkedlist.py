@@ -125,6 +125,19 @@ class LinkedList(object):
                 node = node.next
         
         return None
+    
+    def replace(self, item, new_item):
+        """Replace the given item from this linked list.
+        Best case running time: O(1) If the head is the value we are looking for
+        Worst case running time: O(n) We have to loop through the entine linked list, N being length of the linked list"""
+        node = self.head
+
+        while node:
+            if node.data == item:
+                node.data = new_item
+                return
+            
+            node = node.next
         
 
     def delete(self, item):

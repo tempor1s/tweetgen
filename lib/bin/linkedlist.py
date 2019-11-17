@@ -38,7 +38,7 @@ class LinkedList(object):
     
     def append(self, item):
         """Insert the given item at the tail of this linked list.
-        TODO: Running time: O(???) Why and under what conditions?"""
+        Running time: O(1) Because we always keep track of the tail"""
         # Create a new node to either be set as head or as last node
         node = Node(item)
         # If head is none, set node to head and tail and then return
@@ -53,7 +53,7 @@ class LinkedList(object):
     
     def prepend(self, item):
         """Insert the given item at the head of this linked list.
-        TODO: Running time: O(???) Why and under what conditions?"""
+        Running time: O(1) Because we always keep track of the head"""
         # Create a new node object
         node = Node(item)
 
@@ -91,9 +91,16 @@ class LinkedList(object):
 
     def length(self):
         """Return the length of this linked list by traversing its nodes.
-        TODO: Running time: O(???) Why and under what conditions?"""
-        # TODO: Loop through all nodes and count one for each
-        # If there are no items in the linked list return a length of 0
+        Running time: O(n) n being the length of the list"""
+        # Standard implementation
+        # count = 0
+        # node = self.head
+        # while node:
+        #     count += 1
+        #     node = node.next
+        # return count
+        
+        # Recursive implementation
         return self._count(self.head)
     
     def _count(self, node):
@@ -106,8 +113,8 @@ class LinkedList(object):
 
     def find(self, quality):
         """Return an item from this linked list satisfying the given quality.
-        TODO: Best case running time: O(???) Why and under what conditions?
-        TODO: Worst case running time: O(???) Why and under what conditions?"""
+        Best case running time: O(1) If the head is the value we are looking for
+        Worst case running time: O(n) We have to loop through the entine linked list, N being length of the linked list"""
         
         node = self.head
         
@@ -122,8 +129,8 @@ class LinkedList(object):
 
     def delete(self, item):
         """Delete the given item from this linked list, or raise ValueError.
-        TODO: Best case running time: O(1) If the head is the value we are looking for?
-        TODO: Worst case running time: O(n) We have to loop through the entine linked list, N being length of the linked list"""
+        Best case running time: O(1) If the head is the value we are looking for
+        Worst case running time: O(n) We have to loop through the entine linked list, N being length of the linked list"""
         # Get head node and set it to a temp value, set prev to be used later
         node = self.head
         prev = None

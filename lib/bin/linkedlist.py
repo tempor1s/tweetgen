@@ -122,12 +122,45 @@ class LinkedList(object):
 
     def delete(self, item):
         """Delete the given item from this linked list, or raise ValueError.
-        TODO: Best case running time: O(???) Why and under what conditions?
-        TODO: Worst case running time: O(???) Why and under what conditions?"""
-        # TODO: Loop through all nodes to find one whose data matches given item
-        # TODO: Update previous node to skip around node with matching data
-        # TODO: Otherwise raise error to tell user that delete has failed
-        # Hint: raise ValueError('Item not found: {}'.format(item))
+        TODO: Best case running time: O(1) If the head is the value we are looking for?
+        TODO: Worst case running time: O(n) We have to loop through the entine linked list, N being length of the linked list"""
+        # Get head node and set it to a temp value, set prev to be used later
+        node = self.head
+        prev = None
+
+        # If the linked list is empty, raise a value error
+        if not node:
+            raise ValueError(f'Item not found: {item}')
+        
+        # While node is not None
+        while node:
+            # Check if the node's data is what we are looking for
+            if node.data == item:
+                # item we want to remove is the head node because we have not updated the value yet
+                if prev is None:
+                    # Set head to be head nodes next
+                    self.head = node.next
+                    # if head node is also the tail node
+                    if node.next is None:
+                        self.tail = None
+                # second case is that the item we want to remove is at the tail
+                elif node.next is None:
+                    # Set the previous nodes next to be none, and set it to the new tail
+                    prev.next = None
+                    self.tail = prev
+                # third caise is that the item we want to remove is somewhere in the middle
+                else:
+                    # unlink the current node
+                    prev.next = node.next
+                # so we do not infinite loop
+                return
+            else:
+                # node has not been found set so update temp values
+                prev = node
+                node = node.next
+            
+        # If we get to end of the loop the item does not exist, so raise value error
+        raise ValueError(f'Item not found: {item}')
 
 
 def test_linked_list():

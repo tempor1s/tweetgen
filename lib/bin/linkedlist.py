@@ -20,7 +20,7 @@ class LinkedList(object):
         self.head = None  # First node
         self.tail = None  # Last node
         # Append given items
-        if items is not None:
+        if items:
             for item in items:
                 self.append(item)
 
@@ -58,7 +58,7 @@ class LinkedList(object):
         node = Node(item)
 
         # Only enter if head does not exist
-        if not self.head:
+        if self.head is None:
             # Use our append function because head does not exist, and it will handle tail etc
             self.append(item)
             return
@@ -181,6 +181,22 @@ class LinkedList(object):
             
         # If we get to end of the loop the item does not exist, so raise value error
         raise ValueError(f'Item not found: {item}')
+
+
+class LinkedListIterator(object):
+    def __init__(self, head):
+        self.current = head
+
+    def __iter__(self):
+        return self
+    
+    def __next__(self):
+        if not self.current:
+            raise StopIteration
+        else:
+            item = self.current.data
+            self.current = self.current.next
+            return item
 
 
 def test_linked_list():

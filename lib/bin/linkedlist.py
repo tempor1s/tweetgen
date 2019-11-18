@@ -35,7 +35,27 @@ class LinkedList(object):
         return 'LinkedList({!r})'.format(self.items())
 
     def __iter__(self):
-        return LinkedListIterator(self.head)
+        # set node to head
+        node = self.head
+        # loop through every item in the linked list
+        for _ in range(len(self)):
+            # yield the data, then traverse to the next item in the linked list
+            yield node.data
+            # traverse to the next item in the node
+            node = node.next
+        # return LinkedListIterator(self.head)
+    
+    def __len__(self):
+        # we calculate size in other functions, so this just will return that value
+        return self.size
+
+    def __contains__(self, data):
+        # because we implemented __iter__ we can loop through self to get the data
+        for node_data in self:
+            if node_data == data:
+                return True
+
+        return False
     
     def append(self, item):
         """Insert the given item at the tail of this linked list.
@@ -93,8 +113,8 @@ class LinkedList(object):
         return self.head is None
 
     def length(self):
-        """Return the length of this linked list by traversing its nodes.
-        Running time: O(n) n being the length of the list"""
+        """Return the length of this list
+        Running time: O(1) because we calculate length in other functions"""
         # Standard implementation
         # count = 0
         # node = self.head

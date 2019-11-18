@@ -19,6 +19,7 @@ class LinkedList(object):
         """Initialize this linked list and append the given items, if any."""
         self.head = None  # First node
         self.tail = None  # Last node
+        self.size = 0 # length optimization
         # Append given items
         if items:
             for item in items:
@@ -45,10 +46,12 @@ class LinkedList(object):
         if self.head is None:
             self.head = node
             self.tail = node
+            self.size += 1
             return
         
         self.tail.next = node
         self.tail = node
+        self.size += 1 # increment size by 1
 
     
     def prepend(self, item):
@@ -65,9 +68,9 @@ class LinkedList(object):
 
         # Set our new nodes next to be our current head
         node.next = self.head
-        
         # set the new head to be our new node
-        self.head = node
+        self.head = node 
+        self.size +=1 # increment size by 1
 
 
     def items(self):
@@ -101,7 +104,9 @@ class LinkedList(object):
         # return count
         
         # Recursive implementation
-        return self._count(self.head)
+        # return self._count(self.head)
+        
+        return self.size
     
     def _count(self, node):
         """Return the length of a linked list by traversing its nodes recursively."""
@@ -172,6 +177,8 @@ class LinkedList(object):
                 else:
                     # unlink the current node
                     prev.next = node.next
+                # reduce the size by 1 because we just deleted an item
+                self.size -= 1
                 # so we do not infinite loop
                 return
             else:

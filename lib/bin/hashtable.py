@@ -21,6 +21,25 @@ class HashTable(object):
         """Return the bucket index where the given key would be stored."""
         # Calculate the given key's hash code and transform into bucket index
         return hash(key) % len(self.buckets)
+    
+    def _get_item(self, key):
+        """Return item and bucket for a given key.
+        Params:
+            key: object - the key you want to get the item from
+        
+        Returns:
+            item, bucket:
+                Item: The item that was requested, None if not found
+                Bucket: The bucket that the item was searched for in (linked list)
+        """
+        # get the bucket index for the given key
+        bucket_index = self._bucket_index(key)
+        # get the bucket (linked list) with the bucket index we just got
+        bucket = self.buckets[bucket_index]
+        # find the item from the given key
+        item = bucket.find(lambda item: item[0] == key)
+        # return the item, bucket
+        return item, bucket
 
     def keys(self):
         """Return a list of all keys in this hash table.
@@ -68,30 +87,23 @@ class HashTable(object):
         """Return True if this hash table contains the given key, or False.
         Average case running time: O(1) Every bucket has 1 item
         Worst case running time: O(N) N being the amount of items in a bucket"""
-        bucket_index = self._bucket_index(key)
+        # get item and bucket
+        item, bucket = self._get_item(key)
 
-        # get the bucket (linked list) with the bucket index we just got
-        bucket = self.buckets[bucket_index]
-
-        if bucket.find(lambda item: item[0] == key):
+        # if item is not None
+        if item:
             return True
-
         return False
 
     def get(self, key):
         """Return the value associated with the given key, or raise KeyError.
         Average case running time: O(1) Every bucket has 1 item
         Worst case running time: O(N) N being the amount of items in a bucket"""
-        # get the bucket index for the given key
-        bucket_index = self._bucket_index(key)
+        # get item and bucket
+        item, bucket = self._get_item(key)
 
-        # get the bucket (linked list) with the bucket index we just got
-        bucket = self.buckets[bucket_index]
-
-        item = bucket.find(lambda item: item[0] == key)
-
+        # if item exists return the value associated with the key, else raise KeyError
         if item:
-            # returns the value associated with the key
             return item[1]
         else:
             raise KeyError('Key not found: {}'.format(key))
@@ -100,14 +112,9 @@ class HashTable(object):
         """Insert or update the given key with its associated value.
         Average case running time: O(1) Every bucket has 1 item
         Worst case running time: O(N) Having to loop through N items in a bucket to find the item to replace"""
-        # get the bucket index for the given key
-        bucket_index = self._bucket_index(key)
+        # get the item and the bucket
+        item, bucket = self._get_item(key)
 
-        # get the bucket (linked list) with the bucket index we just got
-        bucket = self.buckets[bucket_index]
-
-        # if an item with that key is found
-        item = bucket.find(lambda item: item[0] == key)
         if item:
             bucket.replace(item, (key, value))
         else:  # insert given key-value entry into bucket if not found
@@ -117,13 +124,8 @@ class HashTable(object):
         """Delete the given key from this hash table, or raise KeyError.
         Average case running time: O(1) Every bucket has 1 item
         Worst case running time: O(N) N being amount of items in a bucket"""
-        # get the bucket index for the given key
-        bucket_index = self._bucket_index(key)
-
-        # get the bucket (linked list) with the bucket index we just got
-        bucket = self.buckets[bucket_index]
-
-        item = bucket.find(lambda item: item[0] == key)
+        # get the item and the bucket
+        item, bucket = self._get_item(key)
 
         if item:
             bucket.delete(item)

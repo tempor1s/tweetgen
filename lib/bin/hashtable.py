@@ -72,9 +72,6 @@ class HashTable(object):
         
         return False
 
-        # TODO: Find bucket where given key belongs
-        # TODO: Check if key-value entry exists in bucket
-
     def get(self, key):
         """Return the value associated with the given key, or raise KeyError.
         TODO: Running time: O(???) Why and under what conditions?"""
@@ -111,12 +108,18 @@ class HashTable(object):
     def delete(self, key):
         """Delete the given key from this hash table, or raise KeyError.
         TODO: Running time: O(???) Why and under what conditions?"""
-        # TODO: Find bucket where given key belongs
-        # TODO: Check if key-value entry exists in bucket
-        # TODO: If found, delete entry associated with given key
-        # TODO: Otherwise, raise error to tell user delete failed
-        # Hint: raise KeyError('Key not found: {}'.format(key))
+        # get the bucket index for the given key
+        bucket_index = self._bucket_index(key)
 
+        # get the bucket (linked list) with the bucket index we just got
+        bucket = self.buckets[bucket_index]
+
+        item = bucket.find(lambda item: item[0] == key)
+
+        if item:
+            bucket.delete(item)
+        else:
+            raise KeyError('Key not found: {}'.format(key))
 
 def test_hash_table():
     ht = HashTable()

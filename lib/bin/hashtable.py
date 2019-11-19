@@ -1,8 +1,8 @@
 from linkedlist import LinkedList
 
 
+# This is my implementation using seperate chaining collision resolution
 class HashTable(object):
-
     def __init__(self, init_size=8):
         """Initialize this hash table with the given initial size."""
         # Create a new list (used as fixed-size array) of empty linked lists
@@ -57,16 +57,16 @@ class HashTable(object):
         """Return a list of all keys in this hash table.
         Average case running time: O(N) Every bucket only has 1 item
         Worst case running time: O(N^2) We loop through every bucket, and then every item in each bucket"""
-        # TODO: Implement Python version of this that yields keys
         # create an empty list to store all keys
-        all_keys = []
+        # all_keys = []
         # loop through each bucket
         for bucket in self.buckets:
             # append each key that is in each item (linked list) in the bucket
             for key, value in bucket.items():
-                all_keys.append(key)
+                # all_keys.append(key)
+                yield key
         # return a list of all the keys
-        return all_keys
+        # return all_keys
 
     def values(self):
         """Return a list of all values in this hash table.
@@ -74,14 +74,15 @@ class HashTable(object):
         Worst case running time: O(N^2) We loop through every bucket, and then every item in each bucket"""
         # TODO: Implement Python version of this that yields values
         # create an empty list to store all values
-        all_values = []
+        # all_values = []
         # loop through each bucket
         for bucket in self.buckets:
             # append each value that is in each item (linked list) in the bucket
             for key, value in bucket.items():
-                all_values.append(value)
+                # all_values.append(value)
+                yield value
         # return a list of all the values
-        return all_values
+        # return all_values
 
     def items(self):
         """Return a list of all items (key-value pairs) in this hash table.
@@ -174,6 +175,10 @@ class HashTable(object):
             # for every item in bucket, delete it
             for key, value in bucket.items():
                 self.delete(key)
+    
+    def reversed(self):
+        """Return a reverse iterator over the keys of the dictionary. This is a shortcut for reversed(d.keys())"""
+        return reversed(self.keys())
 
 
 def test_hash_table():

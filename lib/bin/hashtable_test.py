@@ -14,23 +14,23 @@ class HashTableTest(unittest.TestCase):
 
     def test_keys(self):
         ht = HashTable()
-        assert ht.keys() == []
+        assert list(ht.keys()) == []
         ht.set('I', 1)
-        assert ht.keys() == ['I']
+        assert list(ht.keys()) == ['I']
         ht.set('V', 5)
-        self.assertCountEqual(ht.keys(), ['I', 'V'])  # Ignore item order
+        self.assertCountEqual(list(ht.keys()), ['I', 'V'])  # Ignore item order
         ht.set('X', 10)
-        self.assertCountEqual(ht.keys(), ['I', 'V', 'X'])  # Ignore item order
+        self.assertCountEqual(list(ht.keys()), ['I', 'V', 'X'])  # Ignore item order
 
     def test_values(self):
         ht = HashTable()
-        assert ht.values() == []
+        assert list(ht.values()) == []
         ht.set('I', 1)
-        assert ht.values() == [1]
+        assert list(ht.values()) == [1]
         ht.set('V', 5)
-        self.assertCountEqual(ht.values(), [1, 5])  # Ignore item order
+        self.assertCountEqual(list(ht.values()), [1, 5])  # Ignore item order
         ht.set('X', 10)
-        self.assertCountEqual(ht.values(), [1, 5, 10])  # Ignore item order
+        self.assertCountEqual(list(ht.values()), [1, 5, 10])  # Ignore item order
 
     def test_items(self):
         ht = HashTable()

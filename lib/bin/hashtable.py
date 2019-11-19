@@ -62,6 +62,16 @@ class HashTable(object):
     def contains(self, key):
         """Return True if this hash table contains the given key, or False.
         TODO: Running time: O(???) Why and under what conditions?"""
+        bucket_index = self._bucket_index(key)
+
+        # get the bucket (linked list) with the bucket index we just got
+        bucket = self.buckets[bucket_index]
+
+        if bucket.find(lambda item: item[0] == key):
+            return True
+        
+        return False
+
         # TODO: Find bucket where given key belongs
         # TODO: Check if key-value entry exists in bucket
 
@@ -92,7 +102,6 @@ class HashTable(object):
         bucket = self.buckets[bucket_index]
 
         # if an item with that key is found
-        # TODO: This may not work
         item = bucket.find(lambda item: item[0] == key)
         if item:
             bucket.replace(item, (key, value))

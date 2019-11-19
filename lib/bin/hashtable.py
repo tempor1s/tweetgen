@@ -16,7 +16,13 @@ class HashTable(object):
     def __repr__(self):
         """Return a string representation of this hash table."""
         return 'HashTable({!r})'.format(self.items())
-
+    
+    def __contains__(self, key):
+        return self.contains(key)
+    
+    def __len__(self):
+        return self.length()
+    
     def _bucket_index(self, key):
         """Return the bucket index where the given key would be stored."""
         # Calculate the given key's hash code and transform into bucket index

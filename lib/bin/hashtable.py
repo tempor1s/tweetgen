@@ -181,6 +181,65 @@ class HashTable(object):
         return reversed(self.keys())
 
 
+# This is my implementation using linear probing collision resolution
+class LinearHashTable(object):
+    def __init__(self, init_size=8):
+        """Initialize this hash table with the given initial size."""
+        # Create a new list (used as fixed-size array) of empty linked lists
+        self.buckets = [LinkedList() for _ in range(init_size)]
+        self.size = 0
+
+    def __str__(self):
+        """Return a formatted string representation of this hash table."""
+        items = ['{!r}: {!r}'.format(key, val) for key, val in self.items()]
+        return '{' + ', '.join(items) + '}'
+
+    def __repr__(self):
+        """Return a string representation of this hash table."""
+        return 'HashTable({!r})'.format(self.items())
+    
+    def __contains__(self, key):
+        return self.contains(key)
+
+    def __len__(self):
+        return self.length()
+
+    def _bucket_index(self, key):
+        """Return the bucket index where the given key would be stored."""
+        # Calculate the given key's hash code and transform into bucket index
+        return hash(key) % len(self.buckets)
+
+    def keys(self):
+        pass
+
+    def values(self):
+        pass
+
+    def items(self):
+        pass
+    
+    def length(self):
+        pass
+
+    def contains(self, key):
+        pass
+
+    def get(self, key):
+        pass
+
+    def set(self, key):
+        pass
+
+    def delete(self, key):
+        pass
+
+    def clear(self, key):
+        pass
+
+    def reversed(self):
+        pass
+
+
 def test_hash_table():
     ht = HashTable()
     print('hash table: {}'.format(ht))

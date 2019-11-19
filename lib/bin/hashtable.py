@@ -53,8 +53,11 @@ class HashTable(object):
     def length(self):
         """Return the number of key-value entries by traversing its buckets.
         TODO: Running time: O(???) Why and under what conditions?"""
-        # TODO: Loop through all buckets
-        # TODO: Count number of key-value entries in each bucket
+        count = 0
+        for bucket in self.buckets:
+            for item in bucket.items():
+                count += 1
+        return count
 
     def contains(self, key):
         """Return True if this hash table contains the given key, or False.
@@ -72,7 +75,6 @@ class HashTable(object):
         bucket = self.buckets[bucket_index]
 
         item = bucket.find(lambda item: item[0] == key)
-        print('Item', item)
         
         if item:
             # returns the value associated with the key
@@ -91,8 +93,9 @@ class HashTable(object):
 
         # if an item with that key is found
         # TODO: This may not work
-        if bucket.find(lambda item: item[0] == key):
-            bucket.replace(key, value)
+        item = bucket.find(lambda item: item[0] == key)
+        if item:
+            bucket.replace(item, (key, value))
         else: # insert given key-value entry into bucket if not found
             bucket.append((key, value))
 

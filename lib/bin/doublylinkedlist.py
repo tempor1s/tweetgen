@@ -106,3 +106,6 @@ class DoubleyLinkedList(object):
                 return
             
             node = node.next
+        
+    def delete(self, item):
+        pass

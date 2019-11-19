@@ -1,6 +1,4 @@
-#!python
-
-from lib.linkedlist import LinkedList
+from linkedlist import LinkedList
 
 
 class HashTable(object):
@@ -37,8 +35,11 @@ class HashTable(object):
     def values(self):
         """Return a list of all values in this hash table.
         TODO: Running time: O(???) Why and under what conditions?"""
-        # TODO: Loop through all buckets
-        # TODO: Collect all values in each bucket
+        all_values = []
+        for bucket in self.buckets:
+            for key, value in bucket.items():
+                all_values.append(value)
+        return all_values
 
     def items(self):
         """Return a list of all items (key-value pairs) in this hash table.
@@ -73,10 +74,18 @@ class HashTable(object):
     def set(self, key, value):
         """Insert or update the given key with its associated value.
         TODO: Running time: O(???) Why and under what conditions?"""
-        # TODO: Find bucket where given key belongs
-        # TODO: Check if key-value entry exists in bucket
-        # TODO: If found, update value associated with given key
-        # TODO: Otherwise, insert given key-value entry into bucket
+        # get the bucket index for the given key
+        bucket_index = self._bucket_index(key)
+
+        # get the bucket (linked list) with the bucket index we just got
+        bucket = self.buckets[bucket_index]
+
+        # if an item with that key is found
+        # TODO: This may not work
+        if bucket.find(lambda item: item == key):
+            bucket.replace(key, value)
+        else: # insert given key-value entry into bucket if not found
+            bucket.append((key, value))
 
     def delete(self, key):
         """Delete the given key from this hash table, or raise KeyError.
@@ -119,5 +128,12 @@ def test_hash_table():
         print('length: {}'.format(ht.length()))
 
 
+def test():
+    ht = HashTable()
+    print('hash table: {}'.format(ht))
+    ht.set('hello', 1)
+
+
 if __name__ == '__main__':
     test_hash_table()
+    # test()

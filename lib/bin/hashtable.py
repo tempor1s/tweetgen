@@ -24,6 +24,11 @@ class HashTable(object):
     def __len__(self):
         return self.length()
     
+    def __iter__(self):
+        for bucket in self.buckets:
+            for item in bucket.items():
+                yield item
+    
     def _bucket_index(self, key):
         """Return the bucket index where the given key would be stored."""
         # Calculate the given key's hash code and transform into bucket index
@@ -180,7 +185,7 @@ def test_hash_table():
     print('length: {}'.format(ht.length()))
 
     # Enable this after implementing delete method
-    delete_implemented = False
+    delete_implemented = True
     if delete_implemented:
         print('\nTesting delete:')
         for key in ['I', 'V', 'X']:

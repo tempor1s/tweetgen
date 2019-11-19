@@ -166,6 +166,9 @@ class HashTable(object):
             raise KeyError('Key not found: {}'.format(key))
     
     def clear(self):
+        """Delete all items from this hash table.
+        Average case running time: O(N) Every bucket
+        """
         # loop through every bucket
         for bucket in self.buckets:
             # for every item in bucket, delete it

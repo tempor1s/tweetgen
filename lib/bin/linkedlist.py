@@ -19,7 +19,7 @@ class LinkedList(object):
         """Initialize this linked list and append the given items, if any."""
         self.head = None  # First node
         self.tail = None  # Last node
-        self.size = 0 # length optimization
+        self.size = 0  # length optimization
         # Append given items
         if items:
             for item in items:
@@ -44,7 +44,7 @@ class LinkedList(object):
             # traverse to the next item in the node
             node = node.next
         # return LinkedListIterator(self.head)
-    
+
     def __len__(self):
         # we calculate size in other functions, so this just will return that value
         return self.size
@@ -56,7 +56,7 @@ class LinkedList(object):
                 return True
 
         return False
-    
+
     def append(self, item):
         """Insert the given item at the tail of this linked list.
         Running time: O(1) Because we always keep track of the tail"""
@@ -68,12 +68,11 @@ class LinkedList(object):
             self.tail = node
             self.size += 1
             return
-        
+
         self.tail.next = node
         self.tail = node
-        self.size += 1 # increment size by 1
+        self.size += 1  # increment size by 1
 
-    
     def prepend(self, item):
         """Insert the given item at the head of this linked list.
         Running time: O(1) Because we always keep track of the head"""
@@ -89,9 +88,8 @@ class LinkedList(object):
         # Set our new nodes next to be our current head
         node.next = self.head
         # set the new head to be our new node
-        self.head = node 
-        self.size +=1 # increment size by 1
-
+        self.head = node
+        self.size += 1  # increment size by 1
 
     def items(self):
         """Return a list (dynamic array) of all items in this linked list.
@@ -123,12 +121,12 @@ class LinkedList(object):
         #     count += 1
         #     node = node.next
         # return count
-        
+
         # Recursive implementation
         # return self._count(self.head)
-        
+
         return self.size
-    
+
     def _count(self, node):
         """Return the length of a linked list by traversing its nodes recursively."""
         if node is None:
@@ -136,35 +134,34 @@ class LinkedList(object):
         else:
             return 1 + self._count(node.next)
 
-
     def find(self, quality):
         """Return an item from this linked list satisfying the given quality.
         Best case running time: O(1) If the head is the value we are looking for
         Worst case running time: O(n) We have to loop through the entine linked list, N being length of the linked list"""
-        
+        # TODO: Check if head and tail are the nodes first before looping to increase potential time
         node = self.head
-        
+
         while node:
             if quality(node.data) == True:
                 return node.data
             else:
                 node = node.next
-        
+
         return None
-    
+
     def replace(self, item, new_item):
         """Replace the given item from this linked list.
         Best case running time: O(1) If the head is the value we are looking for
         Worst case running time: O(n) We have to loop through the entine linked list, N being length of the linked list"""
+        # TODO: Check if head and tail are the nodes first before looping to increase potential time
         node = self.head
 
         while node:
             if node.data == item:
                 node.data = new_item
                 return
-            
+
             node = node.next
-        
 
     def delete(self, item):
         """Delete the given item from this linked list, or raise ValueError.
@@ -177,7 +174,7 @@ class LinkedList(object):
         # If the linked list is empty, raise a value error
         if not node:
             raise ValueError(f'Item not found: {item}')
-        
+
         # While node is not None
         while node:
             # Check if the node's data is what we are looking for
@@ -206,7 +203,7 @@ class LinkedList(object):
                 # node has not been found set so update temp values
                 prev = node
                 node = node.next
-            
+
         # If we get to end of the loop the item does not exist, so raise value error
         raise ValueError(f'Item not found: {item}')
 
@@ -217,7 +214,7 @@ class LinkedListIterator(object):
 
     def __iter__(self):
         return self
-    
+
     def __next__(self):
         if not self.current:
             raise StopIteration

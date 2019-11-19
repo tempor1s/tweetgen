@@ -7,6 +7,7 @@ class HashTable(object):
         """Initialize this hash table with the given initial size."""
         # Create a new list (used as fixed-size array) of empty linked lists
         self.buckets = [LinkedList() for _ in range(init_size)]
+        self.size = 0
 
     def __str__(self):
         """Return a formatted string representation of this hash table."""
@@ -93,18 +94,18 @@ class HashTable(object):
 
     def length(self):
         """Return the number of key-value entries by traversing its buckets.
-        Average case running time: O(N) Every bucket only has 1 item
-        Worst case running time: O(N^2) We loop through every bucket, and then every item in each bucket"""
+        Average case running time: O(1) We calculate length in our set and delete functions"""
         # TODO: Create an implementation that stores length in the hashtable and lets the functions increment / decremt it
         # create temporary variable to store count
-        count = 0
-        # loop through each bucket
-        for bucket in self.buckets:
-            # for every item in each bucket, increment count by 1
-            for item in bucket.items():
-                count += 1
-        # return the count
-        return count
+        # count = 0
+        # # loop through each bucket
+        # for bucket in self.buckets:
+        #     # for every item in each bucket, increment count by 1
+        #     for item in bucket.items():
+        #         count += 1
+        # # return the count
+        # return count
+        return self.size
 
     def contains(self, key):
         """Return True if this hash table contains the given key, or False.
@@ -143,6 +144,7 @@ class HashTable(object):
             bucket.replace(item, (key, value))
         else:
             bucket.append((key, value))
+            self.size += 1
 
     def delete(self, key):
         """Delete the given key from this hash table, or raise KeyError.
@@ -154,6 +156,7 @@ class HashTable(object):
         # if item exists, delete it. otherwise raise KeyError that item was not found
         if item:
             bucket.delete(item)
+            self.size -= 1
         else:
             raise KeyError('Key not found: {}'.format(key))
 

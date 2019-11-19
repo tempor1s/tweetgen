@@ -17,13 +17,13 @@ class HashTable(object):
     def __repr__(self):
         """Return a string representation of this hash table."""
         return 'HashTable({!r})'.format(self.items())
-    
+
     def __contains__(self, key):
         return self.contains(key)
-    
+
     def __len__(self):
         return self.length()
-    
+
     def __iter__(self):
         for bucket in self.buckets:
             for item in bucket.items():
@@ -164,6 +164,13 @@ class HashTable(object):
             self.size -= 1
         else:
             raise KeyError('Key not found: {}'.format(key))
+    
+    def clear(self):
+        # loop through every bucket
+        for bucket in self.buckets:
+            # for every item in bucket, delete it
+            for key, value in bucket.items():
+                self.delete(key)
 
 
 def test_hash_table():
@@ -185,7 +192,7 @@ def test_hash_table():
     print('length: {}'.format(ht.length()))
 
     # Enable this after implementing delete method
-    delete_implemented = True
+    delete_implemented = False
     if delete_implemented:
         print('\nTesting delete:')
         for key in ['I', 'V', 'X']:

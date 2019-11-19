@@ -65,11 +65,20 @@ class HashTable(object):
     def get(self, key):
         """Return the value associated with the given key, or raise KeyError.
         TODO: Running time: O(???) Why and under what conditions?"""
-        # TODO: Find bucket where given key belongs
-        # TODO: Check if key-value entry exists in bucket
-        # TODO: If found, return value associated with given key
-        # TODO: Otherwise, raise error to tell user get failed
-        # Hint: raise KeyError('Key not found: {}'.format(key))
+        # get the bucket index for the given key
+        bucket_index = self._bucket_index(key)
+
+        # get the bucket (linked list) with the bucket index we just got
+        bucket = self.buckets[bucket_index]
+
+        item = bucket.find(lambda item: item[0] == key)
+        print('Item', item)
+        
+        if item:
+            # returns the value associated with the key
+            return item[1]
+        else:
+            raise KeyError('Key not found: {}'.format(key))
 
     def set(self, key, value):
         """Insert or update the given key with its associated value.
@@ -82,7 +91,7 @@ class HashTable(object):
 
         # if an item with that key is found
         # TODO: This may not work
-        if bucket.find(lambda item: item == key):
+        if bucket.find(lambda item: item[0] == key):
             bucket.replace(key, value)
         else: # insert given key-value entry into bucket if not found
             bucket.append((key, value))
@@ -132,6 +141,7 @@ def test():
     ht = HashTable()
     print('hash table: {}'.format(ht))
     ht.set('hello', 1)
+    ht.get('hello')
 
 
 if __name__ == '__main__':

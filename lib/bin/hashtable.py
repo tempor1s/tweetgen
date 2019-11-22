@@ -72,23 +72,20 @@ class HashTable(object):
         """Return a list of all values in this hash table.
         Average case running time: O(N) Every bucket only has 1 item
         Worst case running time: O(N^2) We loop through every bucket, and then every item in each bucket"""
-        # TODO: Implement Python version of this that yields values
         # create an empty list to store all values
-        # all_values = []
+        all_values = []
         # loop through each bucket
         for bucket in self.buckets:
             # append each value that is in each item (linked list) in the bucket
             for key, value in bucket.items():
-                # all_values.append(value)
-                yield value
+                all_values.append(value)
         # return a list of all the values
-        # return all_values
+        return all_values
 
     def items(self):
         """Return a list of all items (key-value pairs) in this hash table.
         Average case running time: O(N) Every bucket only has 1 item
         Worst case running time: O(N^2) Every bucket has multiple items"""
-        # TODO: Implement Python version of this that yields key-value pairs
         # create an empty list to store items
         all_items = []
         # loop through each bucket
@@ -182,62 +179,108 @@ class HashTable(object):
 
 
 # This is my implementation using linear probing collision resolution
-class LinearHashTable(object):
-    def __init__(self, init_size=8):
-        """Initialize this hash table with the given initial size."""
-        # Create a new list (used as fixed-size array) of empty linked lists
-        self.buckets = [LinkedList() for _ in range(init_size)]
-        self.size = 0
+# class LinearHashTable(object):
+#     def __init__(self, init_size=8):
+#         """Initialize this hash table with the given initial size."""
+#         # Create a new list (used as fixed-size array) of empty lists
+#         self.buckets = [[] for _ in range(init_size)]
+#         self.size = 0
 
-    def __str__(self):
-        """Return a formatted string representation of this hash table."""
-        items = ['{!r}: {!r}'.format(key, val) for key, val in self.items()]
-        return '{' + ', '.join(items) + '}'
+#     def __str__(self):
+#         """Return a formatted string representation of this hash table."""
+#         items = ['{!r}: {!r}'.format(key, val) for key, val in self.items()]
+#         return '{' + ', '.join(items) + '}'
 
-    def __repr__(self):
-        """Return a string representation of this hash table."""
-        return 'HashTable({!r})'.format(self.items())
+#     def __repr__(self):
+#         """Return a string representation of this hash table."""
+#         return 'HashTable({!r})'.format(self.items())
     
-    def __contains__(self, key):
-        return self.contains(key)
+#     def __contains__(self, key):
+#         return self.contains(key)
 
-    def __len__(self):
-        return self.length()
+#     def __len__(self):
+#         return self.length()
 
-    def _bucket_index(self, key):
-        """Return the bucket index where the given key would be stored."""
-        # Calculate the given key's hash code and transform into bucket index
-        return hash(key) % len(self.buckets)
-
-    def keys(self):
-        pass
-
-    def values(self):
-        pass
-
-    def items(self):
-        pass
+#     def _bucket_index(self, key):
+#         """Return the bucket index where the given key would be stored."""
+#         # Calculate the given key's hash code and transform into bucket index
+#         return hash(key) % len(self.buckets)
     
-    def length(self):
-        pass
+#     def _get_item(self, key):
+#         bucket_index = self._bucket_index(key)
+#         bucket = self.buckets[bucket_index]
+#         return bucket
 
-    def contains(self, key):
-        pass
+#     def keys(self):
+#         """Return a list of all keys in this hash table.
+#         Average case running time: O(N) Every bucket only has 1 item
+#         Worst case running time: O(N^2) We loop through every bucket, and then every item in each bucket"""
+#         for bucket in self.buckets:
+#             for item in bucket:
+#                 yield item[0]
 
-    def get(self, key):
-        pass
+#     def values(self):
+#         """Return a list of all values in this hash table.
+#         Average case running time: O(N) Every bucket only has 1 item
+#         Worst case running time: O(N^2) We loop through every bucket, and then every item in each bucket"""
+#         for bucket in self.buckets:
+#             for item in bucket:
+#                 yield item[1]
 
-    def set(self, key):
-        pass
+#     def items(self):
+#         """Return a list of all items (key-value pairs) in this hash table.
+#         Average case running time: O(N) Every bucket only has 1 item
+#         Worst case running time: O(N^2) Every bucket has multiple items"""
+#         # create an empty list to store items
+#         all_items = []
+#         # loop through each bucket
+#         for bucket in self.buckets:
+#             # extend all_items list with all the items from each bucket
+#             all_items.extend(bucket[0])
+#         # return a list of all the items
+#         return all_items
+    
+#     def length(self):
+#         return self.size
 
-    def delete(self, key):
-        pass
+#     def contains(self, key):
+#         bucket = self._get_item(key)
+#         if bucket:
+#             return True
+#         return False
 
-    def clear(self, key):
-        pass
+#     def get(self, key):
+#         bucket = self._get_item(key)
+#         if bucket:
+#             return bucket[0][1]
+#         else:
+#             raise KeyError(f'Key not found: {key}')
 
-    def reversed(self):
-        pass
+#     def set(self, key, value):
+#         bucket = self._get_item(key)
+
+#         # if bucket is not empty
+#         if bucket:
+#             bucket[0] = (key, value)
+#         else:
+#             bucket.append((key, value))
+#             self.size += 1
+
+#     def delete(self, key):
+#         bucket = self._get_item(key)
+
+#         if bucket:
+#             bucket.pop(0)
+#             self.size -= 1
+#         else:
+#             raise KeyError(f'Key not found: {key}')
+
+#     def clear(self, key):
+#         for bucket in self.buckets:
+#             bucket.pop(0)
+
+#     def reversed(self):
+#         pass
 
 
 def test_hash_table():

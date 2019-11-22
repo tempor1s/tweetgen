@@ -110,6 +110,17 @@ class LinkedListTest(unittest.TestCase):
         assert ll.length() == 1
         ll.delete('B')
         assert ll.length() == 0
+    
+    def test_length_after_replace(self):
+        ll = LinkedList(['A', 'B', 'C'])
+        assert ll.length() == 3
+        # length should stay the same
+        ll.replace('B', 'D')
+        assert ll.length() == 3
+
+    def test_len_method(self):
+        ll = LinkedList(['A', 'B', 'C'])
+        assert len(ll) == 3
 
     def test_append(self):
         ll = LinkedList()

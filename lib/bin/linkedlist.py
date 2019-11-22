@@ -136,11 +136,16 @@ class LinkedList(object):
 
     def find(self, quality):
         """Return an item from this linked list satisfying the given quality.
-        Best case running time: O(1) If the head is the value we are looking for
+        Best case running time: O(1) If the head or tail is the value we are looking for
         Worst case running time: O(n) We have to loop through the entine linked list, N being length of the linked list"""
-        # TODO: Check if head and tail are the nodes first before looping to increase potential time
-        node = self.head
+        # Check head and tail data first before looping to increase potential time
+        if quality(self.head.data) == True:
+            return self.head.data
+        
+        if quality(self.tail.data) == True:
+            return self.tail.data
 
+        node = self.head
         while node:
             if quality(node.data) == True:
                 return node.data

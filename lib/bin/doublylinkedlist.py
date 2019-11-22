@@ -36,6 +36,9 @@ class DoubleyLinkedList(object):
             self.head = node
             self.tail = node
             return
+
+        # set our nodes prev to be our current tail
+        node.prev = self.tail
         # Set the tails next to be the new node
         self.tail.next = node
         # Set the tails prev to be the old tail
@@ -53,7 +56,7 @@ class DoubleyLinkedList(object):
             self.append(item)
             return
 
-        # set out nodes next to be our current head
+        # set our nodes next to be our current head
         node.next = self.head
         # set the current head to have a previous of our new node
         self.head.prev = node
@@ -108,4 +111,28 @@ class DoubleyLinkedList(object):
             node = node.next
         
     def delete(self, item):
-        pass
+        node = self.head
+        prev = None
+
+        if not node:
+            raise ValueError(f'Item not found: {item}')
+            
+        while node:
+            if node.data == item:
+                if prev is None:
+                    self.head = node.next
+
+                    if node.next is None:
+                        self.tail = None
+                elif node.next is None:
+                    prev.next = None
+                    self.tail = prev
+                else:
+                    prev.next = node.next
+                    node.prev = prev
+                return
+            else:
+                prev = node
+                node = node.next
+        
+        raise ValueError(f'Item not found: {item}')

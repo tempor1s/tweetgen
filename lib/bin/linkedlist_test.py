@@ -83,6 +83,31 @@ class LinkedListTest(unittest.TestCase):
         ll.prepend('A')
         assert ll.length() == 3
 
+    def test_head_after_append(self):
+        ll = LinkedList()
+        assert ll.head == None
+        ll.append('A')
+        assert ll.head.data == 'A'
+    
+    def test_tail_after_append(self):
+        ll = LinkedList()
+        assert ll.tail == None
+        ll.append('A')
+        assert ll.tail.data == 'A'
+    
+    def test_tail_after_two_appends(self):
+        ll = LinkedList()
+        assert ll.head == None
+        assert ll.tail == None
+
+        ll.append('A')
+        assert ll.head.data == 'A'
+        assert ll.tail.data == 'A'
+    
+        ll.append('B')
+        assert ll.head.data == 'A'
+        assert ll.tail.data == 'B'
+
     def test_length_after_append_and_prepend(self):
         ll = LinkedList()
         assert ll.length() == 0

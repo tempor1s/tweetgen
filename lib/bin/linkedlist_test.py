@@ -205,6 +205,18 @@ class LinkedListTest(unittest.TestCase):
         assert ll.find(lambda item: item < 'B') == 'A'  # Match less than
         assert ll.find(lambda item: item > 'B') == 'C'  # Match greater than
         assert ll.find(lambda item: item == 'X') is None  # No matching item
+    
+    def test_find_after_delete(self):
+        ll = LinkedList(['A', 'B', 'C'])
+        assert ll.find(lambda item: item == 'B') == 'B'
+        ll.delete('B')
+        assert ll.find(lambda item: item == 'B') is None
+    
+    def test_find_after_append(self):
+        ll = LinkedList(['A', 'B'])
+        assert ll.find(lambda item: item == 'C') is None
+        ll.append('C')
+        assert ll.find(lambda item: item == 'C') == 'C'
 
     def test_delete_with_3_items(self):
         ll = LinkedList(['A', 'B', 'C'])

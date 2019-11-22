@@ -217,6 +217,22 @@ class LinkedListTest(unittest.TestCase):
         assert ll.find(lambda item: item == 'C') is None
         ll.append('C')
         assert ll.find(lambda item: item == 'C') == 'C'
+    
+    def test_delete_with_1_item(self):
+        ll = LinkedList(['A'])
+        assert ll.head.data == 'A'
+        assert ll.tail.data == 'A'
+        
+        ll.delete('A')
+
+        assert ll.head == None
+        assert ll.tail == None
+
+    def test_next_after_delete(self):
+        ll = LinkedList(['A', 'B'])
+        assert ll.head.next is not None
+        ll.delete('B')
+        assert ll.head.next is None
 
     def test_delete_with_3_items(self):
         ll = LinkedList(['A', 'B', 'C'])

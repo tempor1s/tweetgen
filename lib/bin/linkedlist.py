@@ -176,10 +176,6 @@ class LinkedList(object):
         node = self.head
         prev = None
 
-        # If the linked list is empty, raise a value error
-        if not node:
-            raise ValueError(f'Item not found: {item}')
-
         # While node is not None
         while node:
             # Check if the node's data is what we are looking for

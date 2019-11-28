@@ -1,4 +1,5 @@
 from linkedlist import LinkedList
+from lib.utils import time_it
 
 
 # This is my implementation using seperate chaining collision resolution
@@ -29,11 +30,13 @@ class HashTable(object):
             for item in bucket.items():
                 yield item
     
+    # @time_it
     def _bucket_index(self, key):
         """Return the bucket index where the given key would be stored."""
         # Calculate the given key's hash code and transform into bucket index
         return hash(key) % len(self.buckets)
 
+    # @time_it
     def _get_item(self, key):
         """Return item and bucket for a given key.
         Params:
@@ -53,10 +56,11 @@ class HashTable(object):
         # return the item, bucket
         return item, bucket
 
+    # @time_it
     def keys(self):
         """Return a list of all keys in this hash table.
         Average case running time: O(N) Every bucket only has 1 item
-        Worst case running time: O(N^2) We loop through every bucket, and then every item in each bucket"""
+        Worst case running time: O(N) We loop through every bucket, and then every item in each bucket"""
         # create an empty list to store all keys
         # all_keys = []
         # loop through each bucket
@@ -68,10 +72,11 @@ class HashTable(object):
         # return a list of all the keys
         # return all_keys
 
+    # @time_it
     def values(self):
         """Return a list of all values in this hash table.
         Average case running time: O(N) Every bucket only has 1 item
-        Worst case running time: O(N^2) We loop through every bucket, and then every item in each bucket"""
+        Worst case running time: O(N) We loop through every bucket, and then every item in each bucket"""
         # create an empty list to store all values
         all_values = []
         # loop through each bucket
@@ -82,10 +87,11 @@ class HashTable(object):
         # return a list of all the values
         return all_values
 
+    # @time_it
     def items(self):
         """Return a list of all items (key-value pairs) in this hash table.
         Average case running time: O(N) Every bucket only has 1 item
-        Worst case running time: O(N^2) Every bucket has multiple items"""
+        Worst case running time: O(N) Every bucket has multiple items"""
         # create an empty list to store items
         all_items = []
         # loop through each bucket
@@ -95,10 +101,10 @@ class HashTable(object):
         # return a list of all the items
         return all_items
 
+    # @time_it
     def length(self):
         """Return the number of key-value entries by traversing its buckets.
         Average case running time: O(1) We calculate length in our set and delete functions"""
-        # TODO: Create an implementation that stores length in the hashtable and lets the functions increment / decremt it
         # create temporary variable to store count
         # count = 0
         # # loop through each bucket
@@ -110,10 +116,11 @@ class HashTable(object):
         # return count
         return self.size
 
+    # @time_it
     def contains(self, key):
         """Return True if this hash table contains the given key, or False.
         Average case running time: O(1) Every bucket has 1 item
-        Worst case running time: O(N) N being the amount of items in a bucket"""
+        Worst case running time: O(N) If too many items are hashed in a bucket."""
         # get item and bucket
         item, bucket = self._get_item(key)
 
@@ -122,10 +129,11 @@ class HashTable(object):
             return True
         return False
 
+    # @time_it
     def get(self, key):
         """Return the value associated with the given key, or raise KeyError.
         Average case running time: O(1) Every bucket has 1 item
-        Worst case running time: O(N) N being the amount of items in a bucket"""
+        Worst case running time: O(N) If too many items are hashed in a bucket."""
         # get item and bucket
         item, bucket = self._get_item(key)
 
@@ -135,10 +143,11 @@ class HashTable(object):
         else:
             raise KeyError('Key not found: {}'.format(key))
 
+    # @time_it
     def set(self, key, value):
         """Insert or update the given key with its associated value.
         Average case running time: O(1) Every bucket has 1 item
-        Worst case running time: O(N) Having to loop through N items in a bucket to find the item to replace"""
+        Worst case running time: O(N) If too many items are hashed in a bucket."""
         # get the item and the bucket
         item, bucket = self._get_item(key)
 
@@ -149,10 +158,11 @@ class HashTable(object):
             bucket.append((key, value))
             self.size += 1
 
+    # @time_it
     def delete(self, key):
         """Delete the given key from this hash table, or raise KeyError.
         Average case running time: O(1) Every bucket has 1 item
-        Worst case running time: O(N) N being amount of items in a bucket"""
+        Worst case running time: O(N) If too many items are hashed in a bucket."""
         # get the item and the bucket
         item, bucket = self._get_item(key)
 
@@ -162,10 +172,11 @@ class HashTable(object):
             self.size -= 1
         else:
             raise KeyError('Key not found: {}'.format(key))
-    
+
+    # @time_it
     def clear(self):
         """Delete all items from this hash table.
-        Average case running time: O(N) Every bucket
+        Average case running time: O(N) Looping through every item in every bucket
         """
         # loop through every bucket
         for bucket in self.buckets:
@@ -173,6 +184,7 @@ class HashTable(object):
             for key, value in bucket.items():
                 self.delete(key)
     
+    # @time_it
     def reversed(self):
         """Return a reverse iterator over the keys of the dictionary. This is a shortcut for reversed(d.keys())"""
         return reversed(self.keys())

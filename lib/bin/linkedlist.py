@@ -138,7 +138,7 @@ class LinkedList(object):
         """Return an item from this linked list satisfying the given quality.
         Best case running time: O(1) If the head or tail is the value we are looking for
         Worst case running time: O(n) We have to loop through the entine linked list, N being length of the linked list"""
-        # Its empty
+        # Its empty so exit early
         if self.head == None:
             return None
 

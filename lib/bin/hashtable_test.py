@@ -32,6 +32,17 @@ class HashTableTest(unittest.TestCase):
         ht.set('X', 10)
         self.assertCountEqual(list(ht.values()), [1, 5, 10])  # Ignore item order
 
+    # my test
+    def test_sum_values(self):
+        ht = HashTable()
+        assert len(ht.values()) == 0
+        ht.set('A', 3)
+        assert len(ht.values()) == 1
+        ht.set('B', 5)
+        assert len(ht.values()) == 2
+        # check sum of values to make sure they are returning ints
+        assert sum(ht.values()) == 8
+
     def test_items(self):
         ht = HashTable()
         assert ht.items() == []
@@ -51,6 +62,26 @@ class HashTableTest(unittest.TestCase):
         assert ht.length() == 2
         ht.set('X', 10)
         assert ht.length() == 3
+    
+    # my test
+    def test_len_function(self):
+        ht = HashTable()
+        assert len(ht) == 0
+        ht.set('I', 1)
+        assert len(ht) == 1
+        ht.set('V', 5)
+        assert len(ht) == 2
+        ht.set('X', 10)
+        assert len(ht) == 3
+    
+    # my test
+    def test_length_after_delete(self):
+        ht = HashTable()
+        assert len(ht) == 0
+        ht.set('A', 1)
+        assert len(ht) == 1
+        ht.delete('A')
+        assert len(ht) == 0
 
     def test_contains(self):
         ht = HashTable()
@@ -61,6 +92,35 @@ class HashTableTest(unittest.TestCase):
         assert ht.contains('V') is True
         assert ht.contains('X') is True
         assert ht.contains('A') is False
+    
+    # my test
+    def test_contains_after_delete(self):
+        ht = HashTable()
+        ht.set('A', 1)
+        assert ht.contains('A') == True
+        ht.delete('A')
+        assert ht.contains('A') == False
+    
+    # my test
+    def test_get_after_delete(self):
+        ht = HashTable()
+        ht.set('A', 10)
+        assert ht.get('A') == 10
+        ht.delete('A')
+        
+        with self.assertRaises(KeyError):
+            ht.get('A')
+    
+    # my test
+    def test_set_after_delete(self):
+        ht = HashTable()
+        ht.set('A', 10)
+        assert ht.get('A') == 10
+        ht.delete('A')
+        with self.assertRaises(KeyError):
+            ht.get('A')
+        ht.set('A', 10)
+        assert ht.get('A') == 10
 
     def test_set_and_get(self):
         ht = HashTable()
@@ -86,6 +146,11 @@ class HashTableTest(unittest.TestCase):
         assert ht.get('V') == 5
         assert ht.get('X') == 10
         assert ht.length() == 3  # Check length is not overcounting
+    
+    def test_delete_non_existant_items(self):
+        ht = HashTable()
+        with self.assertRaises(KeyError):
+            ht.delete('A')
 
     def test_delete(self):
         ht = HashTable()

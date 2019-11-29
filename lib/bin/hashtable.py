@@ -1,5 +1,5 @@
 from linkedlist import LinkedList
-from lib.utils import time_it
+# from lib.utils import time_it
 
 
 # This is my implementation using seperate chaining collision resolution

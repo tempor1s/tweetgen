@@ -1,7 +1,13 @@
-from lib.dictogram import Dictogram
-from lib.utils import get_clean_words
-from random import choice
-from lib.queue import Queue
+from random import choice, randint
+
+try:
+    from lib.dictogram import Dictogram
+    from lib.utils import get_clean_words
+    from lib.queue import Queue
+except ModuleNotFoundError:
+    from queue import Queue
+    from dictogram import Dictogram
+    from utils import get_clean_words
 
 
 class MarkovChain(dict):
@@ -91,13 +97,40 @@ class MarkovChain(dict):
         return ' '.join(words).capitalize() + '.'
 
 
-# class HigherOrderMarkov(dict):
-#     def __init__(self, word_list=None, order=2):
-#         self.order = order
+class HigherOrderMarkov(dict):
+    def __init__(self, word_list=None, order=2):
+        self.order = order
+        if word_list:
+            self.word_list = word_list
+            self._create_chain(word_list)
+     
+    def _create_chain(self, word_list):
+        n_words = len(word_list)
+        for i, key1 in enumerate(word_list):
+            if n_words > (i + self.order):
+                key2 = words[i + 1]
+                word = words[i + 2]
+                if (key1, key2) not in self:
+                    self[(key1, key2)] = [word]
+                else:
+                    self[(key1, key2)].append(word)
+    
+    def walk(self, count=10):
+        rand = randint(0, len(self.word_list))
+        key = (self.word_list[rand], self.word_list[rand + 1])
+        tweet = key[0] + ' ' + key[1]
 
-#         if word_list:
-#             self._create_chain(word_list)
+        for _ in range(count):
+            word = choice(self[key])
+            tweet += ' ' + word
+            key = (key[1], word)
         
-#     def _create_chain(self, word_list):
-#         for i in range(len(word_list)):
-#             pass
+        return tweet.capitalize() + '.'
+
+if __name__ == "__main__":
+    path = 'txt_files/donald.txt'
+    words = get_clean_words(path)
+    markov = HigherOrderMarkov(words)
+
+    tweet = markov.walk(15)
+    print(tweet)

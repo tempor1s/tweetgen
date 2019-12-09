@@ -22,9 +22,7 @@ markov = HigherOrderMarkov(words)
 @app.route('/', methods=['GET', 'POST'])
 def index():
     num = request.form.get('num', 20)
-    # TODO: Implement vowel weighting check in ajax request and html
-    vowel_weight = request.form.get('vowel', False)
-
+    
     # Generate a new sentence that is num length long
     sentence = markov.walk(int(num))
 

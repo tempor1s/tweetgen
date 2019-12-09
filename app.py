@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, jsonify, redirect, url_for
 from lib.dictogram import Dictogram
-from lib.markov import MarkovChain
+from lib.markov import HigherOrderMarkov
 from lib.utils import get_clean_words
 from pymongo import MongoClient
 import os
@@ -16,7 +16,7 @@ favorites = db.favorites
 # Setup markov chain when the text is first created so it doesn't need to generated on every get request
 path = 'lib/txt_files/donald.txt'
 words = get_clean_words(path)
-markov = MarkovChain(words)
+markov = HigherOrderMarkov(words)
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -26,7 +26,7 @@ def index():
     vowel_weight = request.form.get('vowel', False)
 
     # Generate a new sentence that is num length long
-    sentence = markov.create_sentence(int(num))
+    sentence = markov.walk(int(num))
 
     # for jquery
     if request.method == 'POST':

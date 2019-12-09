@@ -99,17 +99,18 @@ class MarkovChain(dict):
 
 class HigherOrderMarkov(dict):
     def __init__(self, word_list=None, order=2):
-        self.order = order
+        # TODO: use order
+        self.order = order # the order of the markov chain
         if word_list:
-            self.word_list = word_list
-            self._create_chain(word_list)
+            self.word_list = word_list # word list for later use
+            self._create_chain(word_list) # create a chain
      
     def _create_chain(self, word_list):
         n_words = len(word_list)
         for i, key1 in enumerate(word_list):
-            if n_words > (i + self.order):
-                key2 = words[i + 1]
-                word = words[i + 2]
+            if n_words > (i + 2): # TODO: use order
+                key2 = word_list[i + 1]
+                word = word_list[i + 2]
                 if (key1, key2) not in self:
                     self[(key1, key2)] = [word]
                 else:

@@ -1,6 +1,7 @@
 from lib.dictogram import Dictogram
 from lib.utils import get_clean_words
 from random import choice
+from lib.queue import Queue
 
 
 class MarkovChain(dict):
@@ -19,20 +20,15 @@ class MarkovChain(dict):
             self._create_chain(word_list)
 
     def _create_chain(self, word_list):
-        for i in range(0, len(word_list)):
-            # The current word in the iteration
-            word = word_list[i]
-            try:
+        n_words = len(word_list)
+        for i, word in enumerate(word_list):
+            if n_words > (i + 1):
                 # The word 1 index ahead of the current word, aka the next word in the sentence
-                # has to be in try except because of index out of range exception on end of list
                 next_word = word_list[i + 1]
-            # If index error then no new words in list to add so break out
-            except IndexError:
-                break
             # The word dictogram if it exists
             word_dicto = self.get(word, None)
             # If word exists then add a count of 1, otherwise create a new dictogram with the next word
-            if word_dicto:
+            if word in self:
                 # Add a new word entry to the dictogram if the dictogram already exists
                 word_dicto.add_count(next_word, 1)
             else:
@@ -93,3 +89,15 @@ class MarkovChain(dict):
         words = self.walk(count)
         # Return a 'sentence' with a capital letter and a period at the end!
         return ' '.join(words).capitalize() + '.'
+
+
+# class HigherOrderMarkov(dict):
+#     def __init__(self, word_list=None, order=2):
+#         self.order = order
+
+#         if word_list:
+#             self._create_chain(word_list)
+        
+#     def _create_chain(self, word_list):
+#         for i in range(len(word_list)):
+#             pass

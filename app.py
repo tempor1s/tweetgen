@@ -14,7 +14,7 @@ db = client.get_default_database()
 favorites = db.favorites
 
 # Setup markov chain when the text is first created so it doesn't need to generated on every get request
-path = 'lib/txt_files/sherlock.txt'
+path = 'lib/txt_files/donald.txt'
 words = get_clean_words(path)
 markov = MarkovChain(words)
 

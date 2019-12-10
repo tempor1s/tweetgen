@@ -13,6 +13,8 @@ python-dotenv = "*"
 gunicorn = "*"
 pymongo = "*"
 pytest = "*"
+nltk = "*"
+python-twitter = "*"
 
 [requires]
 python_version = "3.7"

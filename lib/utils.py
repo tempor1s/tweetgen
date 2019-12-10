@@ -37,6 +37,7 @@ def get_clean_words(source_file):
         File Not Found if source file does not exist
     """
     with open(source_file, 'r') as f:
-        words_file = f.read().lower()
+        # words_file = f.read().lower()
+        words_file = f.read()
         clean_words = re.sub(r'[^a-zA-Z\s]', '', words_file)
         return clean_words.split()

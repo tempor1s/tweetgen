@@ -27,4 +27,13 @@ $(document).ready(function() {
             data: { sentence: sentence }
         });
     });
+
+    $('#tweet').on('click', function() {
+        let sentence = $('#sentence').text();
+        req = $.ajax({
+            url: '/tweet',
+            type: 'POST',
+            data: { sentence: sentence }
+        })
+    })
 });

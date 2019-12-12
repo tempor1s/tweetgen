@@ -179,10 +179,14 @@ class HashTable(object):
         Average case running time: O(N) Looping through every item in every bucket
         """
         # loop through every bucket
-        for bucket in self.buckets:
-            # for every item in bucket, delete it
-            for key, value in bucket.items():
-                self.delete(key)
+        # for bucket in self.buckets:
+        #     # for every item in bucket, delete it
+        #     for key, value in bucket.items():
+        #         self.delete(key)
+        for i in range(len(self.buckets)):
+            self.buckets[i] = LinkedList()
+        
+        self.size = 0
     
     # @time_it
     def reversed(self):
@@ -312,6 +316,10 @@ def test_hash_table():
 
     print('contains({!r}): {}'.format('X', ht.contains('X')))
     print('length: {}'.format(ht.length()))
+
+    print(ht)
+    ht.clear()
+    print(ht)
 
     # Enable this after implementing delete method
     delete_implemented = False

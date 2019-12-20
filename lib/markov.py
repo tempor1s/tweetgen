@@ -108,13 +108,20 @@ class HigherOrderMarkov(dict):
     def _create_chain(self, word_list):
         n_words = len(word_list)
         for i, key1 in enumerate(word_list):
-            if n_words > (i + 2): # TODO: use order
+            if n_words > (i + self.order): # TODO: use order
                 key2 = word_list[i + 1]
                 word = word_list[i + 2]
-                if (key1, key2) not in self:
-                    self[(key1, key2)] = [word]
+                words = []
+
+                for j in range(self.order):
+                    words.append(word_list[i + j])
+                
+                entry = tuple(words)
+
+                if entry not in self:
+                    self[entry] = [word]
                 else:
-                    self[(key1, key2)].append(word)
+                    self[entry].append(word)
     
     def walk(self, count=10):
         rand = randint(0, len(self.word_list))

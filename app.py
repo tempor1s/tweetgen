@@ -29,7 +29,7 @@ twitter_api = twitter.Api(consumer_key=CONSUMER_KEY, consumer_secret=CONSUMER_SE
 # Setup markov chain when the text is first created so it doesn't need to generated on every get request
 path = 'lib/txt_files/donald.txt'
 words = get_clean_words(path)
-markov = HigherOrderMarkov(words)
+markov = HigherOrderMarkov(words, 2)
 
 
 @app.route('/', methods=['GET', 'POST'])

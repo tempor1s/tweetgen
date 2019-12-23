@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, jsonify, redirect, url_for
 from lib.dictogram import Dictogram
-from lib.markov import HigherOrderMarkov
+# from lib.markov import HigherOrderMarkov
+from lib.narkov import Narkov
 from lib.utils import get_clean_words
 from pymongo import MongoClient
 import os
@@ -29,7 +30,7 @@ twitter_api = twitter.Api(consumer_key=CONSUMER_KEY, consumer_secret=CONSUMER_SE
 # Setup markov chain when the text is first created so it doesn't need to generated on every get request
 path = 'lib/txt_files/donald.txt'
 words = get_clean_words(path)
-markov = HigherOrderMarkov(words, 2)
+markov = Narkov(words, 2)
 
 
 @app.route('/', methods=['GET', 'POST'])
@@ -37,7 +38,7 @@ def index():
     num = request.form.get('num', 20)
 
     # Generate a new sentence that is num length long
-    sentence = markov.walk(int(num))
+    sentence = markov.generate_sentence(int(num))
 
     # for jquery
     if request.method == 'POST':

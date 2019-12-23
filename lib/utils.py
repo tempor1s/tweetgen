@@ -38,6 +38,7 @@ def get_clean_words(source_file):
     """
     with open(source_file, 'r') as f:
         # words_file = f.read().lower()
-        words_file = f.read()
-        clean_words = re.sub(r'[^a-zA-Z\s]', '', words_file)
+        # words_file = f.read()
+        # clean_words = re.sub(r'[^a-zA-Z\s]', '', words_file)
+        clean_words = f.read()
         return clean_words.split()

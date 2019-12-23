@@ -447,8 +447,9 @@ class DavidMarkovN(DavidMarkov):
 
 
 if __name__ == "__main__":
-    words = get_clean_words('txt_files/donald.txt')
+    words = get_clean_words('txt_files/example.txt')
 
     markov = ImprovedMarkovChain(words, 2)
+    print(markov)
 
-    print(' '.join(markov.sample(30)))
+    print(' '.join(markov.sample(10)))

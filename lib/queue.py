@@ -64,9 +64,9 @@ class QueueIter(object):
 
     def __next__(self):
         if self.current_node is not None:  # if the node is not None
-            prev = self.current_node
-            self.current_node = prev.next  # set node to the next node in the queue
-            return prev  # return the nodes data on every iteration
+            prev_node = self.current_node
+            self.current_node = prev_node.next  # set node to the next node in the queue
+            return prev_node  # return the nodes data on every iteration
 
         raise StopIteration  # stop iteration if we reach the end of the queue
 

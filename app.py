@@ -34,6 +34,10 @@ markov = Markov(words, 2)
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
+    return render_template('index.html')
+
+@app.route('/donald-tweetgen', methods=['GET', 'POST'])
+def donald_tweetgen():
     num = request.form.get('num', 20)
 
     # Generate a new sentence that is num length long
@@ -43,7 +47,7 @@ def index():
     if request.method == 'POST':
         return jsonify({'sentence': sentence})
 
-    return render_template('index.html', sentence=sentence, num=num)
+    return render_template('donald_tweetgen.html', sentence=sentence, num=num)
 
 
 @app.route('/favorites', methods=['GET', 'POST'])

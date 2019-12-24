@@ -1,32 +1,5 @@
 {% extends 'base.html' %} {% block content %}
 <div>
     <h1>Tweet Gen</h1>
-    <h3>
-        Sentence Generator using n'th order markov chain. Generated sentence is
-        below:
-    </h3>
-    <br /><br />
-    <h4 id="sentence">{{ sentence }}</h4>
-    <br />
-    <div>
-        Sentence Length:
-        <input
-            id="num_field"
-            type="number"
-            name="num"
-            value="{{ num }}"
-        />
-        <br /><br />
-        <button class="btn btn-primary" id="generate">
-            Generate new sentence
-        </button>
-        <button class="btn btn-info" id="favorite">
-            Mark sentence as favorite
-        </button>
-        <button class="btn btn-primary" id='tweet'>
-            Tweet this sentence!
-        </button>
-        <a class="btn btn-dark" href="/favorites">View Favorites</a>
-    </div>
 </div>
 {% endblock %}

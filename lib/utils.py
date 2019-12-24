@@ -45,6 +45,8 @@ def get_clean_words(source_file):
 
 
 def get_all_user_tweets(twitter_client, username):
+    """Get 3200 tweets from a user's timeline because that is the max possible, return them in a list."""
+    # TODO: Improve
     tweets = []  # an empty list to store all the tweets
     max_id = None  # max_id will be the last tweet id so we can get 3200 tweets
 

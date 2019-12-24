@@ -10,7 +10,7 @@ $(document).ready(function() {
             vowel = 'True';
         }
         req = $.ajax({
-            url: '/',
+            url: '/donald-tweetgen',
             type: 'POST',
             data: { num: num, vowel: vowel }
         });

@@ -12,9 +12,9 @@ Requirements:
 
 - [Python 3](https://www.python.org/)
 - [Pipenv](https://pipenv.kennethreitz.org/en/latest/)
-- [Postgres](https://www.postgresql.org/)
+- [MongoDB](https://www.mongodb.com/)
 
-We are going to assume you have Postgres installed and running. If not, please refer to the Postgres [documentation.](https://www.postgresql.org/)
+We are going to assume you have MongoDB installed and running. If not, please refer to the MongoDB [documentation.](https://www.mongodb.com/)
 
 Installation:
 
@@ -49,7 +49,15 @@ Once you have renamed the `.env` file and populated it with the correct data, al
 # run the server (make sure you are in your virtual environment you created in an earlier step)
 python3 app.py
 # navigate to localhost to see your running application!
-http://localhost:5000
+http://0.0.0.0:5000
 ```
 
 Congrats! You now have a local version of Tweet Generator running!
+
+## 🔨 Built With
+
+- [Flask](http://flask.palletsprojects.com/en/1.1.x/) - Webserver
+- [python-dotenv](https://pypi.org/project/python-dotenv/) - To keep secrets secret
+- [pytest](https://docs.pytest.org/en/latest/) - For testing to make sure my code isn't broken
+- [PyMongo](https://api.mongodb.com/python/current/) - For interfacing with MongoDB.
+- [python-twitter](https://github.com/bear/python-twitter) - For interfacing with Twitter.

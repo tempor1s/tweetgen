@@ -42,3 +42,19 @@ def get_clean_words(source_file):
         # clean_words = re.sub(r'[^a-zA-Z\s]', '', words_file)
         clean_words = f.read()
         return clean_words.split()
+
+
+def get_all_user_tweets(twitter_client, username):
+    tweets = []  # an empty list to store all the tweets
+    max_id = None  # max_id will be the last tweet id so we can get 3200 tweets
+
+    for _ in range(16):  # loop 16 times because 3200 / 200 per request is 16
+        timeline = twitter_client.GetUserTimeline(
+            screen_name=username, include_rts=False, count=200, max_id=max_id)  # get 200 tweets
+        for tweet in timeline:  # loop through each of the 200 tweets
+            # add the text data of each tweet to our empty array
+            tweets.append(tweet.text)
+        # get the last item in the timeline to be used as our next max_id for searching
+        max_id = timeline[-1].id
+
+    return tweets

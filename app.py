@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, jsonify, redirect, url_for
 from lib.dictogram import Dictogram
 from lib.markov import Markov
-from lib.utils import get_clean_words
+from lib.utils import get_clean_words, get_all_user_tweets
 from pymongo import MongoClient
 import os
 import twitter  # for tweeting
@@ -56,6 +56,7 @@ def favorites_view():
 
     return render_template('favorites.html', sentences=favorites.find({}))
 
+
 @app.route('/tweet', methods=['POST', 'GET'])
 def tweet():
     if request.method == 'POST':
@@ -67,7 +68,19 @@ def tweet():
         print(twitter_api.VerifyCredentials())
         twitter_api.PostUpdate(sentence)
         # TODO: Redirect back to home page?
-        return 'Tweet was successful!' 
+        return 'Tweet was successful!'
+
+
+@app.route('/user/<username>', methods=['POST', 'GET'])
+def user(username):
+    tweets = get_all_user_tweets(twitter_api, username)
+    tweets = ' '.join(tweets)
+
+    words = tweets.split()
+    
+    markov = Markov(words, order=2)
+
+    return render_template('user_tweets.html', sentence=markov.generate_sentence(), username=username)
 
 if __name__ == "__main__":
     app.run(debug=True, host='0.0.0.0', port=os.environ.get('PORT', 5000))

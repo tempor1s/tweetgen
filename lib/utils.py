@@ -1,5 +1,6 @@
 import time
 import re
+import twitter
 
 
 def time_it(func):
@@ -51,8 +52,11 @@ def get_user_tweets_corpus(twitter_client, username):
     max_id = None  # max_id will be the last tweet id so we can get 3200 tweets
 
     for _ in range(16):  # loop 16 times because 3200 / 200 per request is 16
-        timeline = twitter_client.GetUserTimeline(
-            screen_name=username, include_rts=False, count=200, max_id=max_id)  # get 200 tweets
+        try:
+            timeline = twitter_client.GetUserTimeline(
+                screen_name=username, include_rts=False, count=200, max_id=max_id)  # get 200 tweets
+        except twitter.TwitterError:
+            return 'Sorry, hat user does not exist. Please try again.'
         for tweet in timeline:  # loop through each of the 200 tweets
             # add the text data of each tweet to our empty array
             tweets.append(tweet.text)

@@ -99,6 +99,9 @@ def tweet():
 def user(username):
     # get user tweets corpus
     tweets = get_user_tweets_corpus(twitter_api, username)
+    # check to make sure the user exists
+    if tweets == 'Sorry, hat user does not exist. Please try again.':
+        return tweets
     # get order of markov chain
     order = int(request.args.get('markov_order', 2))
     # get the amount of sentences to be generated for each tweet

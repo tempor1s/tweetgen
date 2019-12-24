@@ -4,12 +4,21 @@
 
     <div>
         <form method="POST" action="/">
-            User to generate tweets for:
+            Twitter handle of user you want to generate tweets for:
             <input id="username" type="text" name="username" />
+            <br />
+            Order of markov chain:
+            <input id='markov_order' type="number" name='markov_order' value="{{ markov_order }}" />
+            <br />
+            'Sentences' for each tweet:
+            <input id='sentences_per_tweet' type="number" name='sentences_per_tweet' value="{{ sentences_per_tweet }}" />
+            <br />
+            Number of tweets to generate:
+            <input id='number_of_tweets' type="number" name='number_of_tweets' value="{{ number_of_tweets }}" />
             <br />
             <br />
             <button class="btn btn-primary" type="submit">
-                Generate tweet for a user!
+                Generate tweets for a user!
             </button>
         </form>
     </div>

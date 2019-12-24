@@ -44,7 +44,7 @@ def get_clean_words(source_file):
         return clean_words.split()
 
 
-def get_all_user_tweets(twitter_client, username):
+def get_user_tweets_corpus(twitter_client, username):
     """Get 3200 tweets from a user's timeline because that is the max possible, return them in a list."""
     # TODO: Improve
     tweets = []  # an empty list to store all the tweets
@@ -59,4 +59,4 @@ def get_all_user_tweets(twitter_client, username):
         # get the last item in the timeline to be used as our next max_id for searching
         max_id = timeline[-1].id
 
-    return tweets
+    return ' '.join(tweets)

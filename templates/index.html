@@ -1,5 +1,17 @@
 {% extends 'base.html' %} {% block content %}
 <div>
-    <h1>Tweet Gen</h1>
+    <h1>TweetGen</h1>
+
+    <div>
+        <form method="POST" action="/">
+            User to generate tweets for:
+            <input id="username" type="text" name="username" />
+            <br />
+            <br />
+            <button class="btn btn-primary" type="submit">
+                Generate tweet for a user!
+            </button>
+        </form>
+    </div>
 </div>
 {% endblock %}

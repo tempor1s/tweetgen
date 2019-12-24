@@ -34,6 +34,13 @@ markov = Markov(words, 2)
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
+    username = ''
+    if request.method == 'POST':
+        username = request.form.get('username')
+
+        return redirect(url_for('user', username=username))
+        # return render_template('index.html', username=username)
+
     return render_template('index.html')
 
 @app.route('/donald-tweetgen', methods=['GET', 'POST'])

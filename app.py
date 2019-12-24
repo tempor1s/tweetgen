@@ -110,7 +110,7 @@ def user(username):
     # TODO: Clean up the corpus
     words = tweets.split()
     # Generate a markov chain with all the words in the corpus with a specific order
-    markov = Markov(words, order=order)
+    markov = Markov(words, order=order, sentences=sentences_per_tweet)
 
     return render_template('user_tweets.html', sentence=markov.generate_sentence(), username=username)
 

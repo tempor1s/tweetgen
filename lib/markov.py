@@ -12,9 +12,10 @@ except ModuleNotFoundError:
 
 
 class Markov(dict):
-    def __init__(self, word_list, order=2):
+    def __init__(self, word_list, order=2, sentences=1):
         super().__init__()
         self.order = order  # order of the markov chain
+        self.sentences = sentences
         self.memory = Queue(order)  # for sampling from markov model
 
         if word_list is not None:
@@ -47,44 +48,49 @@ class Markov(dict):
 
     def generate_sentence(self):
         """Generate a sentence from the internal markov chain."""
-        starting_state = self['START'].sample()[0]  # word from starting state
-        sentence_list = list()  # empty array to append sentence items to
-        sentence_list.extend(starting_state)  # the start of the sentence :)
-        failsafe = 0  # Count to keep as a failsafe if there is no punctuation.
+        sentences = [] # empty list to keep generated sentences so that we can return them :)
+        for _ in range(self.sentences): # generate as many sentences as the user wants
+            starting_state = self['START'].sample()[0]  # word from starting state
+            sentence_list = list()  # empty array to append sentence items to
+            sentence_list.extend(starting_state)  # the start of the sentence :)
+            failsafe = 0 # Count to keep as a failsafe if there is no punctuation.
 
-        # loop through starting state and add those items to the queue
-        for item in starting_state:
-            self.memory.enqueue(item)
-        # infinite loops are fun :)
-        while True:
-            # increase failsafe for each iteration
-            failsafe += 1
-            # get the next state by samplying the current state
-            next_state = self[starting_state].sample()[0]  # a word
-            # enque the word into 'memory'
-            self.memory.enqueue(next_state)
-            # add the item to the list
-            sentence_list.append(next_state)
-            # check if the word is an end token
-            if re.search('[\.\?\!]', next_state) is not None:
-                # clear the memory
-                self.memory.clear()
-                # return the sentence as a string without a period because it is added from stop token
-                return ' '.join(sentence_list)
-            # set the new 'starting' state to the the tuple that is currently in 'memory'
-            starting_state = self.memory.serialize()
-            # if ran 30 times exit infinite loop
-            if failsafe > 20:
-                break
-        # clear memory for next sentence generation
-        self.memory.clear()
-        # return the sentence as a string with an appended period because it will not have from stop token
-        return ' '.join(sentence_list) + '.'
+            # loop through starting state and add those items to the queue
+            for item in starting_state:
+                self.memory.enqueue(item)
+
+            while True:
+                # increase failsafe for each iteration
+                failsafe += 1
+                # get the next state by samplying the current state
+                next_state = self[starting_state].sample()[0]  # a word
+                # enque the word into 'memory'
+                self.memory.enqueue(next_state)
+                # add the item to the list
+                sentence_list.append(next_state)
+                # check if the word is an end token
+                if re.search('[\.\?\!]', next_state) is not None:
+                    # clear the memory
+                    self.memory.clear()
+                    # return the sentence as a string without a period because it is added from stop token
+                    sentences.append(' '.join(sentence_list))
+                    break
+                # set the new 'starting' state to the the tuple that is currently in 'memory'
+                starting_state = self.memory.serialize()
+                # if ran 20 times return what we already have and add a period
+                if failsafe > 20:
+                    # clear memory for next sentence generation
+                    self.memory.clear()
+                    # return the sentence as a string with an appended period because it will not have from stop token
+                    sentences.append(' '.join(sentence_list) + '.')
+                    break
+        
+        return ' '.join(sentences)
 
 
 if __name__ == "__main__":
-    words = get_clean_words('txt_files/sherlock.txt')
+    words = get_clean_words('txt_files/donald.txt')
 
-    m = Markov(words, 2)
+    m = Markov(words, 2, 1)
 
     print(m.generate_sentence())

@@ -93,9 +93,8 @@ class Narkov(dict):
 
 
 if __name__ == "__main__":
-    words = get_clean_words('txt_files/donald.txt')
+    words = get_clean_words('txt_files/sherlock.txt')
 
     m = Narkov(words, 2)
-    print(m)
 
     print(m.generate_sentence())

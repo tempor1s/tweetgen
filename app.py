@@ -99,12 +99,19 @@ def tweet():
 def user(username):
     # get user tweets corpus
     tweets = get_user_tweets_corpus(twitter_api, username)
+    # get order of markov chain
+    order = int(request.args.get('markov_order', 2))
+    # get the amount of sentences to be generated for each tweet
+    sentences_per_tweet = int(request.args.get('sentences_per_tweet', 1))
+    # get the number of tweets to be generated
+    number_of_tweets = int(request.args.get('number_of_tweets', 1))
+
     # split corpus into indiviual words
     # TODO: Clean up the corpus
     words = tweets.split()
     # Generate a markov chain with all the words in the corpus with a specific order
-    markov = Markov(words, order=2)
-    
+    markov = Markov(words, order=order)
+
     return render_template('user_tweets.html', sentence=markov.generate_sentence(), username=username)
 
 

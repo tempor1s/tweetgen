@@ -59,5 +59,5 @@ Congrats! You now have a local version of Tweet Generator running!
 - [Flask](http://flask.palletsprojects.com/en/1.1.x/) - Webserver
 - [python-dotenv](https://pypi.org/project/python-dotenv/) - To keep secrets secret
 - [pytest](https://docs.pytest.org/en/latest/) - For testing to make sure my code isn't broken
-- [PyMongo](https://api.mongodb.com/python/current/) - For interfacing with MongoDB.
-- [python-twitter](https://github.com/bear/python-twitter) - For interfacing with Twitter.
+- [PyMongo](https://api.mongodb.com/python/current/) - For interfacing with MongoDB
+- [python-twitter](https://github.com/bear/python-twitter) - For interfacing with Twitter

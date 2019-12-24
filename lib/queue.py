@@ -16,6 +16,9 @@ class Queue(object):
         # call the QueueIter class which returns an iterator
         return QueueIter(self.head)
 
+    def __len__(self):
+        return self.length
+
     def enqueue(self, data):
         self.length += 1
         if self.length > self.order:  # if the length of the queue is longer than the order of markov chain requested

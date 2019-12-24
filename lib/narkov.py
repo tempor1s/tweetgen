@@ -22,6 +22,7 @@ class Narkov(dict):
             self._create_chain(word_list)
 
     def _create_chain(self, word_list):
+        """Generate the internal markov chain that will be used by the sentence generator."""
         for i, message in enumerate(word_list + word_list[:self.order]):
             if i < self.order:  # to fill the queue initally so that we do not add states that are smaller than order
                 self.memory.enqueue(message)  # enqueue each new item
@@ -45,31 +46,18 @@ class Narkov(dict):
         self.memory.clear()
 
     def generate_sentence(self):
-        """Generate a sentence from the internal markov chain."""
-        # starting_state = random.choice(list(self.keys()))
-
-        # enque the items into the current memory
-        # for item in starting_state:
-        #     self.memory.enqueue(item)
-
-        # for _ in range(length):
-        #     next_state = self[starting_state].sample()[0]
-        #     self.memory.enqueue(next_state)
-        #     yield next_state
-        #     starting_state = self.memory.serialize()
-
-        
+        """Generate a sentence from the internal markov chain."""        
         starting_state = self['START'].sample()[0] # word from starting state
-        sentence_list = list()
+        sentence_list = list() # empty array to append sentence items to
         sentence_list.extend(starting_state) # the start of the sentence :)
-        
         failsafe = 0 # Count to keep as a failsafe if there is no punctuation.
-        
-        for item in starting_state: # loop through starting state and add those items to the queue
-            self.memory.enqueue(item)
 
+        # loop through starting state and add those items to the queue
+        for item in starting_state:
+            self.memory.enqueue(item)
+        # infinite loops are fun :)
         while True:
-            # increase failsafe
+            # increase failsafe for each iteration
             failsafe += 1
             # get the next state by samplying the current state
             next_state = self[starting_state].sample()[0] # a word
@@ -77,18 +65,20 @@ class Narkov(dict):
             self.memory.enqueue(next_state)
             # add the item to the list
             sentence_list.append(next_state)
-
             # check if the word is an end token
             if re.search('[\.\?\!]', next_state) is not None:
+                # clear the memory
                 self.memory.clear()
+                # return the sentence as a string without a period because it is added from stop token
                 return ' '.join(sentence_list)
             # set the new 'starting' state to the the tuple that is currently in 'memory'
             starting_state = self.memory.serialize()
-
-            if failsafe > 30: # if ran 30 times exit
-                break # break out of infinite loop
-
-        self.memory.clear() # clear memory for next generation
+            # if ran 30 times exit infinite loop
+            if failsafe > 20:
+                break
+        # clear memory for next sentence generation
+        self.memory.clear()
+        # return the sentence as a string with an appended period because it will not have from stop token
         return ' '.join(sentence_list) + '.'
 
 

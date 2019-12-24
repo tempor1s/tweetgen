@@ -38,7 +38,7 @@ def index():
     num = request.form.get('num', 20)
 
     # Generate a new sentence that is num length long
-    sentence = markov.generate_sentence(int(num))
+    sentence = markov.generate_sentence()
 
     # for jquery
     if request.method == 'POST':

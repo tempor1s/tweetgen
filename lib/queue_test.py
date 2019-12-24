@@ -70,3 +70,18 @@ class QueueTest(unittest.TestCase):
         
         for i, item in enumerate(q):
             assert item.data == items[i]
+        
+    def test_clear(self):
+        q = Queue()
+
+        q.enqueue('A')
+
+        assert len(q) == 1
+        assert q.head is not None
+        assert q.tail is not None
+    
+        q.clear()
+
+        assert len(q) == 0
+        assert q.head is None
+        assert q.tail is None

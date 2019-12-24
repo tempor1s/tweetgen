@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, jsonify, redirect, url_for
 from lib.dictogram import Dictogram
-from lib.narkov import Narkov
+from lib.markov import Markov
 from lib.utils import get_clean_words
 from pymongo import MongoClient
 import os
@@ -29,7 +29,7 @@ twitter_api = twitter.Api(consumer_key=CONSUMER_KEY, consumer_secret=CONSUMER_SE
 # Setup markov chain when the text is first created so it doesn't need to generated on every get request
 path = 'lib/txt_files/donald.txt'
 words = get_clean_words(path)
-markov = Narkov(words, 2)
+markov = Markov(words, 2)
 
 
 @app.route('/', methods=['GET', 'POST'])

@@ -11,7 +11,7 @@ except ModuleNotFoundError:
     from utils import get_clean_words
 
 
-class Narkov(dict):
+class Markov(dict):
     def __init__(self, word_list, order=2):
         super().__init__()
         self.order = order  # order of the markov chain
@@ -85,6 +85,6 @@ class Narkov(dict):
 if __name__ == "__main__":
     words = get_clean_words('txt_files/sherlock.txt')
 
-    m = Narkov(words, 2)
+    m = Markov(words, 2)
 
     print(m.generate_sentence())

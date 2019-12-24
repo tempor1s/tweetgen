@@ -1,6 +1,5 @@
 from flask import Flask, render_template, request, jsonify, redirect, url_for
 from lib.dictogram import Dictogram
-# from lib.markov import HigherOrderMarkov
 from lib.narkov import Narkov
 from lib.utils import get_clean_words
 from pymongo import MongoClient

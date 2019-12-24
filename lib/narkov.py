@@ -42,15 +42,15 @@ class Narkov(dict):
                 else:
                     # otherwise create a new dictogram with the new state
                     self[current_state] = Dictogram([message])
-        
+
         self.memory.clear()
 
     def generate_sentence(self):
-        """Generate a sentence from the internal markov chain."""        
-        starting_state = self['START'].sample()[0] # word from starting state
-        sentence_list = list() # empty array to append sentence items to
-        sentence_list.extend(starting_state) # the start of the sentence :)
-        failsafe = 0 # Count to keep as a failsafe if there is no punctuation.
+        """Generate a sentence from the internal markov chain."""
+        starting_state = self['START'].sample()[0]  # word from starting state
+        sentence_list = list()  # empty array to append sentence items to
+        sentence_list.extend(starting_state)  # the start of the sentence :)
+        failsafe = 0  # Count to keep as a failsafe if there is no punctuation.
 
         # loop through starting state and add those items to the queue
         for item in starting_state:
@@ -60,7 +60,7 @@ class Narkov(dict):
             # increase failsafe for each iteration
             failsafe += 1
             # get the next state by samplying the current state
-            next_state = self[starting_state].sample()[0] # a word
+            next_state = self[starting_state].sample()[0]  # a word
             # enque the word into 'memory'
             self.memory.enqueue(next_state)
             # add the item to the list

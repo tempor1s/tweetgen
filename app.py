@@ -91,7 +91,7 @@ def tweet():
 
         print(twitter_api.VerifyCredentials())
         twitter_api.PostUpdate(sentence)
-        # TODO: Redirect back to home page?
+
         return 'Tweet was successful!'
 
 
@@ -111,8 +111,10 @@ def user(username):
     words = tweets.split()
     # Generate a markov chain with all the words in the corpus with a specific order
     markov = Markov(words, order=order, sentences=sentences_per_tweet)
+    # generate x amount of tweets
+    sentences = [markov.generate_sentence() for _ in range(number_of_tweets)]
 
-    return render_template('user_tweets.html', sentence=markov.generate_sentence(), username=username)
+    return render_template('user_tweets.html', sentences=sentences, username=username)
 
 
 if __name__ == "__main__":

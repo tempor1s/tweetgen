@@ -1,5 +1,10 @@
 {% extends 'base.html' %}
 {% block content %}
-<h1>User tweets for {{ username }}</h1>
-<h3>Sentence: {{ sentence }}</h3>
+    <h1>User tweets for {{ username }}</h1>
+    <h3>Sentences:</h3>
+    <br>
+    {% for sentence in sentences %}
+        <h4>{{ sentence }}</h4>
+        <br>
+    {% endfor %}
 {% endblock %}

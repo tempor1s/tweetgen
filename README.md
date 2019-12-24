@@ -10,9 +10,9 @@ TweetGen is a project that uses a markov language model to generate unique 'twee
 
 Requirements:
 
-[Python 3](https://www.python.org/)
-[Pipenv](https://pipenv.kennethreitz.org/en/latest/)
-[Postgres](https://www.postgresql.org/)
+- [Python 3](https://www.python.org/)
+- [Pipenv](https://pipenv.kennethreitz.org/en/latest/)
+- [Postgres](https://www.postgresql.org/)
 
 We are going to assume you have Postgres installed and running. If not, please refer to the Postgres [documentation.](https://www.postgresql.org/)
 

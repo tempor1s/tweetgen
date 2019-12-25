@@ -98,7 +98,7 @@ def tweet():
 @app.route('/user/<username>', methods=['POST', 'GET'])
 def user(username):
     # get user tweets corpus
-    tweets = get_user_tweets_corpus(twitter_api, username)
+    tweets = get_user_tweets_corpus(twitter_api, username, clean=True)
     # check to make sure the user exists
     if tweets == 'Sorry, hat user does not exist. Please try again.':
         return tweets

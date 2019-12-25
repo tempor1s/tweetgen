@@ -45,7 +45,7 @@ def get_clean_words(source_file):
         return clean_words.split()
 
 
-def get_user_tweets_corpus(twitter_client, username):
+def get_user_tweets_corpus(twitter_client, username, clean=False):
     """Get 3200 tweets from a user's timeline because that is the max possible, return them in a list."""
     # TODO: Improve
     tweets = []  # an empty list to store all the tweets
@@ -58,8 +58,15 @@ def get_user_tweets_corpus(twitter_client, username):
         except twitter.TwitterError:
             return 'Sorry, hat user does not exist. Please try again.'
         for tweet in timeline:  # loop through each of the 200 tweets
-            # add the text data of each tweet to our empty array
-            tweets.append(tweet.text)
+            # check if we want to clean up the data that is being returned
+            if clean:
+                # get the text for the tweet
+                tweet_text = tweet.text
+                # do some basic checks to not add tweets if we are cleaning the text
+                final = re.sub(r"http\S+", "", tweet_text)
+                tweets.append(final)
+            else:
+                tweets.append(tweet.text)
         # get the last item in the timeline to be used as our next max_id for searching
         max_id = timeline[-1].id
 

@@ -1,5 +1,6 @@
 import time
 import re
+import twitter
 
 
 def time_it(func):
@@ -42,3 +43,24 @@ def get_clean_words(source_file):
         # clean_words = re.sub(r'[^a-zA-Z\s]', '', words_file)
         clean_words = f.read()
         return clean_words.split()
+
+
+def get_user_tweets_corpus(twitter_client, username):
+    """Get 3200 tweets from a user's timeline because that is the max possible, return them in a list."""
+    # TODO: Improve
+    tweets = []  # an empty list to store all the tweets
+    max_id = None  # max_id will be the last tweet id so we can get 3200 tweets
+
+    for _ in range(16):  # loop 16 times because 3200 / 200 per request is 16
+        try:
+            timeline = twitter_client.GetUserTimeline(
+                screen_name=username, include_rts=False, count=200, max_id=max_id)  # get 200 tweets
+        except twitter.TwitterError:
+            return 'Sorry, hat user does not exist. Please try again.'
+        for tweet in timeline:  # loop through each of the 200 tweets
+            # add the text data of each tweet to our empty array
+            tweets.append(tweet.text)
+        # get the last item in the timeline to be used as our next max_id for searching
+        max_id = timeline[-1].id
+
+    return ' '.join(tweets)

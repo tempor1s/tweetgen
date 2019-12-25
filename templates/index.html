@@ -1,32 +1,26 @@
 {% extends 'base.html' %} {% block content %}
 <div>
-    <h1>Tweet Gen</h1>
-    <h3>
-        Sentence Generator using n'th order markov chain. Generated sentence is
-        below:
-    </h3>
-    <br /><br />
-    <h4 id="sentence">{{ sentence }}</h4>
-    <br />
+    <h1>TweetGen</h1>
+
     <div>
-        Sentence Length:
-        <input
-            id="num_field"
-            type="number"
-            name="num"
-            value="{{ num }}"
-        />
-        <br /><br />
-        <button class="btn btn-primary" id="generate">
-            Generate new sentence
-        </button>
-        <button class="btn btn-info" id="favorite">
-            Mark sentence as favorite
-        </button>
-        <button class="btn btn-primary" id='tweet'>
-            Tweet this sentence!
-        </button>
-        <a class="btn btn-dark" href="/favorites">View Favorites</a>
+        <form method="POST" action="/">
+            Twitter handle of user you want to generate tweets for:
+            <input id="username" type="text" name="username" />
+            <br />
+            Order of markov chain:
+            <input id='markov_order' type="number" name='markov_order' value="{{ markov_order }}" />
+            <br />
+            'Sentences' for each tweet:
+            <input id='sentences_per_tweet' type="number" name='sentences_per_tweet' value="{{ sentences_per_tweet }}" />
+            <br />
+            Number of tweets to generate:
+            <input id='number_of_tweets' type="number" name='number_of_tweets' value="{{ number_of_tweets }}" />
+            <br />
+            <br />
+            <button class="btn btn-primary" type="submit">
+                Generate tweets for a user!
+            </button>
+        </form>
     </div>
 </div>
 {% endblock %}

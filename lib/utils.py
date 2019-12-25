@@ -63,6 +63,7 @@ def get_user_tweets_corpus(twitter_client, username, clean=False):
                 # get the text for the tweet
                 tweet_text = tweet.text
                 # do some basic checks to not add tweets if we are cleaning the text
+                # TODO: Regex sub other stuff as well
                 final = re.sub(r"http\S+", "", tweet_text)
                 tweets.append(final)
             else:

@@ -56,6 +56,11 @@ def index():
                            number_of_tweets=number_of_tweets)
 
 
+@app.route('/about', methods=['GET'])
+def about():
+    return render_template('about.html')
+
+
 @app.route('/donald-tweetgen', methods=['GET', 'POST'])
 def donald_tweetgen():
     num = request.form.get('num', 20)

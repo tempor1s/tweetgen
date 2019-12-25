@@ -56,6 +56,7 @@ Congrats! You now have a local version of Tweet Generator running!
 
 ## 🔨 Built With
 
+- [Python](https://www.python.org/) - Programming Language
 - [Flask](http://flask.palletsprojects.com/en/1.1.x/) - Webserver
 - [python-dotenv](https://pypi.org/project/python-dotenv/) - To keep secrets secret
 - [pytest](https://docs.pytest.org/en/latest/) - For testing to make sure my code isn't broken

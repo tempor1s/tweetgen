@@ -13,7 +13,6 @@ python-dotenv = "*"
 gunicorn = "*"
 pymongo = "*"
 pytest = "*"
-nltk = "*"
 python-twitter = "*"
 
 [requires]

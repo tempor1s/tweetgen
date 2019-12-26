@@ -48,12 +48,15 @@ class Markov(dict):
 
     def generate_sentence(self):
         """Generate a sentence from the internal markov chain."""
-        sentences = [] # empty list to keep generated sentences so that we can return them :)
-        for _ in range(self.sentences): # generate as many sentences as the user wants
-            starting_state = self['START'].sample()[0]  # word from starting state
+        sentences = []  # empty list to keep generated sentences so that we can return them :)
+        for _ in range(self.sentences):  # generate as many sentences as the user wants
+            # word from starting state
+            starting_state = self['START'].sample()[0]
             sentence_list = list()  # empty array to append sentence items to
-            sentence_list.extend(starting_state)  # the start of the sentence :)
-            failsafe = 0 # Count to keep as a failsafe if there is no punctuation.
+            # the start of the sentence :)
+            sentence_list.extend(starting_state)
+            # Count to keep as a failsafe if there is no punctuation.
+            failsafe = 0
 
             # loop through starting state and add those items to the queue
             for item in starting_state:
@@ -84,7 +87,7 @@ class Markov(dict):
                     # return the sentence as a string with an appended period because it will not have from stop token
                     sentences.append(' '.join(sentence_list) + '.')
                     break
-        
+
         return ' '.join(sentences)
 
 

@@ -56,7 +56,7 @@ def get_user_tweets_corpus(twitter_client, username, clean=False):
             timeline = twitter_client.GetUserTimeline(
                 screen_name=username, include_rts=False, count=200, max_id=max_id)  # get 200 tweets
         except twitter.TwitterError:
-            return 'Sorry, hat user does not exist. Please try again.'
+            return 'Sorry, that user does not exist. Please try again.'
         for tweet in timeline:  # loop through each of the 200 tweets
             # check if we want to clean up the data that is being returned
             if clean:

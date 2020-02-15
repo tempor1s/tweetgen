@@ -51,7 +51,7 @@ def get_user_tweets_corpus(twitter_client, username, clean=False):
     tweets = []  # an empty list to store all the tweets
     max_id = None  # max_id will be the last tweet id so we can get 3200 tweets
 
-    for _ in range(16):  # loop 16 times because 3200 / 200 per request is 16
+    for _ in range(16):  # loop 16 times because 3200 / 200 per request is 16 and you cant get bulk for some reason..
         try:
             timeline = twitter_client.GetUserTimeline(
                 screen_name=username, include_rts=False, count=200, max_id=max_id)  # get 200 tweets

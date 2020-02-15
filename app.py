@@ -13,7 +13,7 @@ load_dotenv()
 app = Flask(__name__)
 
 host = os.environ.get('MONGODB_URI', 'mongodb://localhost:27017/tweetgen')
-client = MongoClient(host=f'{host}?retryWrites=false')
+client = MongoClient(host=f'{host}?retryWrites=false&authSource=admin', username=os.getenv(''))
 db = client.get_default_database()
 favorites = db.favorites
 

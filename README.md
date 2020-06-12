@@ -2,7 +2,7 @@
 
 TweetGen is a project that uses a markov language model to generate unique 'tweets' based off of a corpus.
 
-## [Deployed Version](https://tweetgen.dev.benlafferty.me)
+## [Deployed Version](https://tweetgen.dev.benl.dev)
 
 ## 🚀 Getting Started
 
